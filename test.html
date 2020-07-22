@@ -1,198 +1,30 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <style>
-      .democlass {
-        color: red;
-      }
-      </style>
-  </head>
-    <body>
-<script type="text/javascript">
-	document.getElementById('id');
-	var doc = document;
-	doc.getElementById('id');
-</script>
-
-<!-- Eval function-->
-<h1>Demo: eval</h1>
-	
-	<script type="text/javascript">
-
-		var result;
-
-		function Sum(val1, val2)
-		{
-			return val1 + val2;
-		}
-
-		eval( "result = Sum(15, 5);");
-
-    </script>
-
-
-<!--Set Time Interval-->
-<script type="text/javascript">
-    var intervalID = window.setInterval(myCallback, 500, 'This Is setIntervalDemo1', 'This Is setIntervalDemo1');
-
-function myCallback(a, b)
-{
- // Parameters are purely optional.
- console.log(a);
- console.log(b);
-}
-</script>
-
-<!--User Agent-->
-<div id="demo"></div>
-
-<script type="text/javascript">
-
-    
-var txt = "";
-txt += "<p>User-agent: " + navigator.userAgent + "</p>";
-
-document.getElementById("demo").innerHTML = txt;
-
-</script>
-
-<!-- setTimeout-->
-<body>
-
-    <p>Click the button to wait 3 seconds, then alert "Hello".</p>
-    
-    <button onclick="setTimeoutFunction()">setTimeout</button>
-    
-    <script>
-    var myVar;
-    
-    function setTimeoutFunction() {
-      myVar = setTimeout(alertFunc, 3000);
-    }
-    
-    function alertFunc() {
-      alert("Hello!");
-    }
-    </script>
-    
-    </body>
-
-<!-- Split text -->
-
-<script type="text/javascript">
-    var str = "How are you doing today?";
-var res = str.split(" ");
-    console.log("This is from HTMl page for Testing Split() = " +res);
-</script>
-
-<!-- Location replace Test -->
-<body>
-
-    <button onclick="replaceFunction()">Replace document</button>
-    
-    <script type="text/javascript">
-    function replaceFunction() {
-      location.replace("https://www.udayton.edu")
-    }
-    </script>
-</body>
-
-<!--DispatchEvent(FireEvent)-->
 <head>
-  <script type="text/javascript">
-      function InitMouseDown (event) {
-              if (event.initMouseEvent) {     // all browsers except IE before version 9
-                  var mousedownEvent = document.createEvent ("MouseEvent");
-                  mousedownEvent.initMouseEvent ("mousedown", true, true, window, 0, 
-                                              event.screenX, event.screenY, event.clientX, event.clientY, 
-                                              event.ctrlKey, event.altKey, event.shiftKey, event.metaKey, 
-                                              0, null);
-                  event.target.dispatchEvent (mousedownEvent);
-              } else {
-                  if (document.createEventObject) {   // IE before version 9
-                      var mousedownEvent = document.createEventObject (window.event);
-                      mousedownEvent.button = 1;  // left button is down
-                      event.srcElement.fireEvent ("onmousedown", mousedownEvent);
-                  }
-              }
-      }
-  </script>
+<title>Page Title</title>
 </head>
 <body>
-  <button onmouseover="InitMouseDown (event);" onmousedown="alert ('mousedown event occurred')">
-      Hover over this button!
-  </button>
-</body>
 
-<!--RemoveAttribute-->
-<body>
-
-  <h1 class="democlass">Hello World</h1>
-  
-  <p id="demo">Click the button to remove the class attribute from the h1 element.</p>
-  
-  <button onclick="FunctionremoveAttribute()">Try it</button>
-  
-  <script>
-  function FunctionremoveAttribute() {
-    document.getElementsByTagName("H1")[0].removeAttribute("class"); 
-  }
-  </script>
-  
-  </body>
-    <body>
-
-<h2>JavaScript Math.random()</h2>
-
-<p>Math.random() returns a random number between 0 (included) and 1 (excluded):</p>
-
-<p id="demo"></p>
+<h1>This is a Heading</h1>
+<p>This is a paragraph.</p>
+<script src="https://unpkg.com/esprima@~4.0/dist/esprima.js"></script>
 
 <script>
-  document.getElementById("demo").innerHTML = Math.random();
-</script>
-  </body>
-
-  <!--Ajax XMLHttpRequest -->
-  <body>
-
-    <h2>The XMLHttpRequest Object</h2>
-    
-    <p id="demo">Let AJAX change this text.</p>
-    
-    <button type="button" onclick="loadDoc()">Change Content</button>
-    
-    <script>
-    function loadDoc() {
-      var xhttp;
-      if (window.XMLHttpRequest) {
-        // code for modern browsers
-        xhttp = new XMLHttpRequest();
-      } else {
-        // code for IE6, IE5
-        xhttp = new ActiveXObject("Microsoft.XMLHTTP");
-      }
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          document.getElementById("demo").innerHTML = this.responseText;
-        }
-      };
-      xhttp.open("GET", "ajax_info.txt", true);
-      xhttp.send();
+    //1. setTimeout
+    if (typeof setTimeout === "function" ){
+       var dynamicsetTimeout = "set" + "Timeout";
+       setTimeout(()=>{console.log('setTimeOut static')},0);
+       eval(dynamicsetTimeout + "(()=>{console.log('setTimeOut dynamic')},0)") 
     }
-    </script>
-    
-    </body>
-    <!--Unescape-->
-    <body>
 
-      <script>
-      
-      var str="Need? to- skip?? this!!";
-      var str_esc=escape(str);
-      document.write(str_esc + "<br>")
-      document.write(unescape(str_esc))
-      
-      </script>
-      
-      </body>
+    //2. document.cookie => getCookie [Property access]
+    if (typeof document.cookie === "string" ){
+       console.log("document.cookie=" + document["coo" +"kie"]); 
+    }
+
+
+</script>
+
+</body>
 </html>
+
