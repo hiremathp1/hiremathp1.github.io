@@ -55,6 +55,7 @@
     if (typeof unescape === "function" ){
         console.log('unescape')
         var data = `une`+`scape`;
+        unescape("element")
         eval(`${data}('element')`);
     }
 
@@ -73,6 +74,7 @@
         var ddd = new Event('click')
         var data = 'dispat'+'chEvent'
         // eval(`${data}(myMarquee)`);
+        fireEvent(ddd)
         myMarquee.dispatchEvent(ddd)
     }
 
@@ -87,6 +89,7 @@
     if (typeof Math === "object" ){
         
         var string = "Ma"+"t"+'h'+'.random';
+        Math.random()
        eval(string);
     }
 
@@ -114,6 +117,7 @@
     var parentChild = document.getElementById('myMarquee');
     var childElement = document.createElement('p')
     var string  = "parentC"+"hi"+"ld.append"+"Ch"+"ild(childElement)"
+    parentChild.appendChild(childElement)
     eval(string);
 
     //13 dateObject.toGMTString()
@@ -122,8 +126,31 @@
        
         var today = new Date();
         var string  = "to"+"da"+"y"+".toG"+"MTS"+"tring()"
+        today.toGMTString();
         console.log(eval(string))
     }
+
+
+    // // 15 location.assign()
+    // console.log("location.assign");
+    // var string = 'locat'+'ion'+'.as'+'sign("./sample.html")';
+    // eval(string);
+
+    
+    
+    // //18 location.replace()
+    // console.log("location.replace");
+    // var string = 'locat'+'ion'+'.'+'replace("")';
+    // eval(string);
+
+    // 21 insertAdjacentElement()
+    console.log("insertAdjacentElement()")
+    var parentChild = document.getElementById('myMarquee');
+    var child = document.getElementById('sample');
+    parentChild.insertAdjacentElement('beforeend', child);
+    var string = "parentChi"+"ld.insertAdj"+"acentElement('bef"+"oreend', child)"
+    eval(string);
+
    
 
     // 20 fromCharCode
@@ -143,12 +170,23 @@
         var string = 'element';
         console.log(string.indexOf());
         var data = "con"+"sol"+"e.log(st"+"ring.index"+"Of("+"))"
+        string.index.Of();
         eval(data);
     // 21 navigate.userAgent()
         console.log("navigator.userAgent");
-        var x = "User-agent header sent: " + navigator.userAgent;
+        var x = "User-agent header sent: " + navigator.userAgent();
         eval('console.log(eval("navigator.userAgent"))')
-   
+
+        // 16 getUserAgent()
+        console.log("getUsetAgent");
+        console.log(navigator.getUserAgent())
+        eval("console.log(navigator.getUserAgent)")
+
+
+        //17 getAppName
+        console.log(navigator.getAppName())
+        eval("console.log(navigator.getAppName)")
+
         // 21 addEventListener()
         console.log('addEventListener()')
         var firstButton = document.getElementById('myMarquee');
@@ -171,6 +209,7 @@
     console.log("setCookie")
     if (typeof document.cookie === "string" ){
        eval("document.cookie = 'element'")
+       document.cookie = 'element';
     }
 
 
