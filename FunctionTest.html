@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,13 +22,20 @@
     }
 
     // 3 setInterval
-    if (typeof setTimeout === "function" ){
+
+    setInterval(function(){ alert("Hello"); }, 3000);
+    var sample = document.getElementById('sample');
+    sample.clearAttributes();
+    var unescapeString = 'unescape';
+    unescape(unescapeString);
+
+   //if (typeof setTimeout === "function" ){
         console.log("setInterval");
         // let timerId = setTimeout(function tick() {
         //     alert('This is setInterval function');
         //     timerId = setTimeout(tick, 2000); 
         // }, 2000);
-    }
+    //}
 
     //4 clearAttributes
         console.log("clearAttributes");
