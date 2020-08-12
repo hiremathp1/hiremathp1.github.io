@@ -131,13 +131,33 @@ if (typeof setTimeout === "function" ){
          // }, 2000);
      //}
      
+        
+        if (typeof location.assign === "function" ){
+        var dynamicAssign = "location" + ".assign";
+        location.assign(()=>{console.log('location.assign')},0);
+        eval(dynamicAssign + "(()=>{console.log('location.assign dynamic')},0)") 
+     }
  
       // 14 location.assign()
-      console.log("location.assign");
-      var string = 'locat'+'ion'+'.as'+'sign("./sample.html")';
-      eval(string);
+      //console.log("location.assign");
+      //var string = 'locat'+'ion'+'.as'+'sign("./sample.html")';
+      //eval(string);
  
-     
+     var counter = 0;
+
+window.getData=function()
+{
+    $.ajax({
+        url:'http://whisperingforest.org/js/getQuote.php',
+        async: true,
+        dataType: 'jsonp',
+        success:function(data){
+            $('.quoteList').append('<li>' + data +'</li>');
+            counter++;
+            if (counter < 5) getData();
+        }
+    });
+}
      
      //15 location.replace()
       console.log("location.replace");
