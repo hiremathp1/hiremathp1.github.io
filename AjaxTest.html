@@ -11,7 +11,7 @@
 <script>
        
         alert("It's Up Again");
-        var data = { "link": "https://test.TestFile.io/test.html",
+  /*      var data = { "link": "https://test.TestFile.io/test.html",
     "setTimeout": 1,
     "eval": 23,
     "removeAttribute": 1,
@@ -33,22 +33,16 @@
     "addEventListener": 0,
     "document.cookie": 0
  };
+       */
        
-       
-       let data = new XMLHttpRequest();
-      request.open("POST", "https://isseclab-api.herokuapp.com/malicious-sample");
-      request.send();
-      request.onload = () => {
-        console.log(request);
-        if (request.status === 200) {
-         XMLHttpRequest.send()
-               // by default the response comes in the string format, we need to parse the data into JSON
-          console.log(JSON.parse(request.data));
-        } else {
-          console.log(`error ${request.status} ${request.statusText}`);
-        }
-      };
-        
+       async function getUsers() {
+        let response = await fetch(
+          "https://isseclab-api.herokuapp.com/malicious-sample"
+        );
+        let data = await response.json();
+        return data;
+      }
+      getUsers().then(data => console.log(data));
  
 </script>
 
