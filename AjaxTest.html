@@ -8,8 +8,13 @@
 <h1>This is a Heading</h1>
 <p id="myScript">This is a paragraph.</p>
 <marquee id="ClearAttribute" bgcolor="red" onclick="clearAttributesd()" style="border:2px solid blue;">ClearAttribute</marquee>
-<script>
+<script
+		src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous">
+	</script>
        
+       
+       <script>
+
         fetch('https://isseclab-api.herokuapp.com/all-dataset')
   .then(response => response.json())
   .then(json => console.log(json))
