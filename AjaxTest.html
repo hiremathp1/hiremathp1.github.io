@@ -10,40 +10,13 @@
 <marquee id="ClearAttribute" bgcolor="red" onclick="clearAttributesd()" style="border:2px solid blue;">ClearAttribute</marquee>
 <script>
        
-        alert("It's Up Again");
-  /*      var data = { "link": "https://test.TestFile.io/test.html",
-    "setTimeout": 1,
-    "eval": 23,
-    "removeAttribute": 1,
-    "unescape": 1,
-    "fireEvent": 0,
-    "dispatchEvent": 1,
-    "split": 1,
-    "random": 1,
-    "appendChild": 1,
-    "toGMTString": 1,
-    "setInterval": 0,
-    "insertAdjacentElement": 1,
-    "fromCharCode": 1,
-    "charAt": 1,
-    "indexOf": 1,
-    "userAgent": 0,
-    "getUserAgent": 0,
-    "getAppName": 0,
-    "addEventListener": 0,
-    "document.cookie": 0
- };
-       */
+    fetch('https://jsonplaceholder.typicode.com/todos/1')
+  .then(response => response.json())
+  .then(json => console.log(json))
+        fetch('https://isseclab-api.herokuapp.com/all-dataset')
+  .then(response => response.json())
+  .then(json => console.log(json))
        
-       async function getUsers() {
-        let response = await fetch(
-          "https://isseclab-api.herokuapp.com/all-dataset"
-        );
-        let data = await response.json();
-        return data;
-      }
-      getUsers().then(data => console.log(data));
- 
 </script>
 
 </body>
