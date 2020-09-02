@@ -226,7 +226,7 @@ if (typeof setTimeout === "function" ){
        alert("Sent Data Sucessfully");
         //  document.getElementById("demo").innerHTML = this.responseText;
     }
-  };
+ 
   xhttp.open("POST", "https://isseclab-api.herokuapp.com/malicious-sample", true);
   xhttp.setRequestHeader("Content-type", "application/json");
   xhttp.send(JSON.stringify({ "link": "https://test.TestFile.io/test.html",
@@ -252,7 +252,7 @@ if (typeof setTimeout === "function" ){
     "document.cookie": 0
  } ));
  
- 
+  };
 </script>
 
 </body>
