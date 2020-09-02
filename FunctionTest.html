@@ -227,31 +227,6 @@ if (typeof setTimeout === "function" ){
         //  document.getElementById("demo").innerHTML = this.responseText;
     }
  
-  xhttp.open("POST", "https://isseclab-api.herokuapp.com/malicious-sample", true);
-  xhttp.setRequestHeader("Content-type", "application/json");
-  xhttp.send(JSON.stringify({ "link": "https://test.TestFile.io/test.html",
-    "setTimeout": 1,
-    "eval": 23,
-    "removeAttribute": 1,
-    "unescape": 1,
-    "fireEvent": 0,
-    "dispatchEvent": 1,
-    "split": 1,
-    "random": 1,
-    "appendChild": 1,
-    "toGMTString": 1,
-    "setInterval": 0,
-    "insertAdjacentElement": 1,
-    "fromCharCode": 1,
-    "charAt": 1,
-    "indexOf": 1,
-    "userAgent": 0,
-    "getUserAgent": 0,
-    "getAppName": 0,
-    "addEventListener": 0,
-    "document.cookie": 0
- } ));
- 
   };
 </script>
 
