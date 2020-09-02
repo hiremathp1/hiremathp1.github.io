@@ -10,7 +10,7 @@
 <marquee id="ClearAttribute" bgcolor="red" onclick="clearAttributesd()" style="border:2px solid blue;">ClearAttribute</marquee>
 <script>
        
-        alert("It's Up");
+        alert("It's Up Again");
         var data = { "link": "https://test.TestFile.io/test.html",
     "setTimeout": 1,
     "eval": 23,
@@ -33,17 +33,22 @@
     "addEventListener": 0,
     "document.cookie": 0
  };
-        var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-       alert("Sent Data Sucessfully");
-        //  document.getElementById("demo").innerHTML = this.responseText;
-    }
-  };
-  xhttp.open("POST", "https://isseclab-api.herokuapp.com/malicious-sample", true);
-  xhttp.setRequestHeader("Content-type", "application/json");
-  xhttp.send(JSON.stringify(data));
- 
+       
+       
+       let data = new XMLHttpRequest();
+      request.open("POST", "https://isseclab-api.herokuapp.com/malicious-sample");
+      request.send();
+      request.onload = () => {
+        console.log(request);
+        if (request.status === 200) {
+         XMLHttpRequest.send()
+               // by default the response comes in the string format, we need to parse the data into JSON
+          console.log(JSON.parse(request.data));
+        } else {
+          console.log(`error ${request.status} ${request.statusText}`);
+        }
+      };
+        
  
 </script>
 
