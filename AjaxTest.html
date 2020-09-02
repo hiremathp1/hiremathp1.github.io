@@ -15,9 +15,14 @@
        
        <script>
 
-        fetch('https://isseclab-api.herokuapp.com/all-dataset')
-  .then(response => response.json())
-  .then(json => console.log(json))
+      var json = ''; 
+	json = '{"url":' + '"' + URL-FROM-OPEN-TAB + '"' + '}';
+var xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://isseclab-api.herokuapp.com/malicious-sample", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(jsonUrl);
+	       console.log(json);
+
        
 </script>
 
