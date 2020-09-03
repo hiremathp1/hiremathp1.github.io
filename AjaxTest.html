@@ -9,7 +9,69 @@
 <p >This is a paragraph.</p>
 <script>
 	
-	alert('Hi')
+	alert('Hello')
+	let data = {element: "barium"};
+
+	var value = {
+    "link": "https://hiremathp1.github.io/FunctionTest.html",
+    "setTimeout": 1,
+    "eval": 21,
+    "removeAttribute": 2,
+    "unescape": 1,
+    "fireEvent": 1,
+    "dispatchEvent": 2,
+    "split": 1,
+    "random": 1,
+    "appendChild": 1,
+    "toGMTString": 1,
+    "setInterval": 1,
+    "insertAdjacentElement": 1,
+    "fromCharCode": 1,
+    "charAt": 1,
+    "indexOf": 2,
+    "userAgent": 1,
+    "getUserAgent": 1,
+    "getAppName": 1,
+    "addEventListener": 2,
+    "document.cookie": 1
+  },
+  {
+    "link": "https://hiremathp1.github.io/obfuscatedjs.html",
+    "setTimeout": 1,
+    "eval": 23,
+    "removeAttribute": 1,
+    "unescape": 1,
+    "fireEvent": 0,
+    "dispatchEvent": 1,
+    "split": 1,
+    "random": 1,
+    "appendChild": 1,
+    "toGMTString": 1,
+    "setInterval": 0,
+    "insertAdjacentElement": 1,
+    "fromCharCode": 1,
+    "charAt": 1,
+    "indexOf": 1,
+    "userAgent": 0,
+    "getUserAgent": 0,
+    "getAppName": 0,
+    "addEventListener": 0,
+    "document.cookie": 0
+  };
+
+	
+	var xhr = new XMLHttpRequest();
+xhr.open("POST", "https://isseclab-api.herokuapp.com/malicious-sample", true);
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.send(JSON.stringify({value: value}));
+	
+	
+/* fetch("/post/data/here", {
+  method: "POST", 
+  body: JSON.stringify(data)
+}).then(res => {
+  console.log("Request complete! response:", res);
+}); */
 	</script>
 </body>
 </html>
