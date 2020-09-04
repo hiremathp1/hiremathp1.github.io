@@ -39,7 +39,7 @@
 	var xhr = new XMLHttpRequest();
 xhr.open("POST", "https://isseclab-api.herokuapp.com/malicious-sample", true);
 xhr.setRequestHeader('Content-Type', 'application/json');
-xhr.send(JSON.stringify({"value": value}));
+xhr.send(JSON.stringify({value: value}));
 	console.log(value);
 	console.log("sent");
 	
