@@ -12,32 +12,15 @@
 	alert('Hello with update')
 	
 	var value = {
-    "link": "https://testfrompage.com/FunctionTest.html",
-    "setTimeout": 1,
-    "eval": 21,
-    "removeAttribute": 2,
-    "unescape": 1,
-    "fireEvent": 1,
-    "dispatchEvent": 2,
-    "split": 1,
-    "random": 1,
-    "appendChild": 1,
-    "toGMTString": 1,
-    "setInterval": 1,
-    "insertAdjacentElement": 1,
-    "fromCharCode": 1,
-    "charAt": 1,
-    "indexOf": 2,
-    "userAgent": 1,
-    "getUserAgent": 1,
-    "getAppName": 1,
-    "addEventListener": 2,
-    "document.cookie": 1
+    {
+    "title": "my  post from Ajax",
+    "description": "my  description from ajax"
+}
   };
 
 	
 	var xhr = new XMLHttpRequest();
-xhr.open("POST", "https://isseclab-api.herokuapp.com/benign-sample", true);
+xhr.open("POST", "http://localhost:3000/posts", true);
 xhr.setRequestHeader('Content-Type', 'application/json');
 xhr.send(JSON.stringify({value: value}));
 	console.log(value);
