@@ -15,7 +15,7 @@ if (typeof setTimeout === "function" ){
         setTimeout(()=>{console.log('setTimeOut static')},0);
         eval(dynamicsetTimeout + "(()=>{console.log('setTimeOut dynamic')},0)") 
      }
- 
+   /* 
      //2. document.cookie => getCookie [Property access]
      if (typeof document.cookie === "string" ){
         console.log("document.cookie=" + document["coo" +"kie"]); 
@@ -56,7 +56,7 @@ if (typeof setTimeout === "function" ){
          eval(`${data}('element')`);
      }
  
-  /* // 6 fireEvent
+// 6 fireEvent
      if (typeof dispatchEvent === "function" ){
          console.log('dispatchEvent');
          var myScript = document.getElementById('myScript');
