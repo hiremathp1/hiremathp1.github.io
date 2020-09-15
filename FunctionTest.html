@@ -9,13 +9,14 @@
 <p id="myScript">This is a paragraph.</p>
 <marquee id="ClearAttribute" bgcolor="red" onclick="clearAttributesd()" style="border:2px solid blue;">ClearAttribute</marquee>
 <script>
-//1. setTimeout
+
+           /* //1. setTimeout
 if (typeof setTimeout === "function" ){
         var dynamicsetTimeout = "set" + "Timeout";
         setTimeout(()=>{console.log('setTimeOut static')},0);
         eval(dynamicsetTimeout + "(()=>{console.log('setTimeOut dynamic')},0)") 
      }
-   /* 
+
      //2. document.cookie => getCookie [Property access]
      if (typeof document.cookie === "string" ){
         console.log("document.cookie=" + document["coo" +"kie"]); 
