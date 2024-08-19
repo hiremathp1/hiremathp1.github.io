@@ -200,6 +200,18 @@
         <button onclick="createImage()">Create Image Object</button>
     </div>
 
+    <h1>Eval Security Test</h1>
+    <button id="triggerEval">Trigger Eval 7 Times</button>
+
+    <script>
+        document.getElementById('triggerEval').addEventListener('click', function () {
+            for (let i = 0; i < 7; i++) {
+                console.log(`Eval executed: ${i + 1}`);
+                eval(`console.log('This is eval number ${i + 1}')`);
+            }
+        });
+    </script>
+
     <script>
         // alert example
         function showAlert() {
