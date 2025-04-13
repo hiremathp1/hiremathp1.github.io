@@ -1,400 +1,182 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Monitoring Examples</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        button {
-            margin: 5px;
-            padding: 10px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        h1, h2 {
-            color: #333;
-        }
-        .section {
-            margin-bottom: 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>ಮನೆಮನೆ ಸಮೀಕ್ಷಾ ಪ್ರಪತ್ರ</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .hidden { display: none; }
+    label { display: block; margin-top: 10px; }
+    input, select, textarea { width: 100%; max-width: 400px; margin-top: 5px; }
+    button { margin-top: 15px; padding: 8px 16px; }
+    .error { color: red; }
+    hr { margin: 20px 0; }
+  </style>
 </head>
 <body>
-    <h1>API Monitoring Examples</h1>
 
-    <!-- Window.alert Example -->
-    <div class="section">
-        <h2>Window.alert Example</h2>
-        <button onclick="showAlert()">Show Alert</button>
-    </div>
+  <h1>ವಿವೇಕಾನಂದ ಗ್ರಾಮೀಣ ವಿದ್ಯಾ ಸಂಸ್ಥೆ</h1>
+  <h2>ಭುವನೇಶ್ವರಿ ಆದರ್ಶ ಹಿರಿಯ ಪ್ರಾಥಮಿಕ ಶಾಲೆ, ಕೊಡಿಯಾಲಹೊಸಪೇಟೆ</h2>
+  <p>
+    ಸರ್ವೇ ದಿನಾಂಕ: <input type="date" id="surveyDate" required>
+    <br>
+    ಶಿಕ್ಷಕರ ಹೆಸರು: <input type="text" id="teacherName" placeholder="ಶಿಕ್ಷಕರ ಹೆಸರು" required>
+  </p>
+  <h3>ಮನೆಮನೆ ಸಮೀಕ್ಷಾ ಪ್ರಪತ್ರ (2025–26 ಶೈಕ್ಷಣಿಕ ವರ್ಷ)</h3>
+  <h4>"ಕನ್ನಡ ಕಲಿಯೋಣ, ಶಾಲೆಗೆ ಬರುವೋಣ" ಅಭಿಯಾನ</h4>
 
-    <!-- document.getElementById Example -->
-    <div class="section">
-        <h2>document.getElementById Example</h2>
-        <h3 id="heading">Original Heading</h3>
-        <button onclick="changeHeading()">Change Heading</button>
-    </div>
+  <!-- GPS permission prompt -->
+  <div id="locationPrompt">
+    <p>ದಯವಿಟ್ಟು ನಿಮ್ಮ GPS ಅನ್ನು ಅನುಮತಿಸಿ (Allow GPS) ಮಾಡಿ.</p>
+    <button id="getLocationBtn">GPS ಅನುಮತಿ ನೀಡಿ</button>
+    <p id="gpsStatus" class="error"></p>
+  </div>
 
-    <!-- document.getElementsByTagName Example -->
-    <div class="section">
-        <h2>document.getElementsByTagName Example</h2>
-        <ul>
-            <li>Item 1</li>
-            <li>Item 2</li>
-            <li>Item 3</li>
-        </ul>
-        <button onclick="highlightItems()">Highlight List Items</button>
-    </div>
+  <!-- Survey Form: hidden until GPS is enabled -->
+  <form id="surveyForm" class="hidden">
+    <hr>
+    <h3>ಮನೆಮನೆ ಸಮೀಕ್ಷೆ ವಿವರಗಳು</h3>
+    <label for="serialNumber">ಕ್ರಮ ಸಂಖ್ಯೆ:</label>
+    <input type="text" id="serialNumber" name="serialNumber" required>
+    
+    <label for="parentName">ಪೋಷಕರ / ಪಾಲಕರ ಹೆಸರು:</label>
+    <input type="text" id="parentName" name="parentName" required>
+    
+    <label for="childName">ಮಕ್ಕಳ ಹೆಸರು:</label>
+    <input type="text" id="childName" name="childName" required>
+    
+    <label for="age">ವಯಸ್ಸು:</label>
+    <input type="number" id="age" name="age" required>
+    
+    <label for="status">ಈಗ ಏನು ಮಾಡುತ್ತಿದ್ದಾರೆ? (ಹಾಜರಾಗಿದ್ದಾರೆ / ಡ್ರಾಪೌಟ್):</label>
+    <select id="status" name="status" required>
+      <option value="ಹಾಜರಾಗಿದ್ದಾರೆ">ಹಾಜರಾಗಿದ್ದಾರೆ</option>
+      <option value="ಡ್ರಾಪೌಟ್">ಡ್ರಾಪೌಟ್</option>
+    </select>
+    
+    <label for="mobileNumber">ಮೊಬೈಲ್ ಸಂಖ್ಯೆ:</label>
+    <input type="tel" id="mobileNumber" name="mobileNumber" required>
+    
+    <label for="homeAddress">ಗೃಹ ವಿಳಾಸ:</label>
+    <textarea id="homeAddress" name="homeAddress" required></textarea>
+    
+    <label for="notes">ಟಿಪ್ಪಣಿ / ಗಮನಾರ್ಹತೆ:</label>
+    <textarea id="notes" name="notes"></textarea>
+    
+    <label for="homeImage">ಮನೆ ಚಿತ್ರದ ಅಪ್‌ಲೋಡ್:</label>
+    <input type="file" id="homeImage" name="homeImage" accept="image/*">
+    
+    <!-- Hidden fields for storing GPS coordinates -->
+    <input type="hidden" id="latitude" name="latitude">
+    <input type="hidden" id="longitude" name="longitude">
+    
+    <button type="submit">ಸಮರ್ಪಿಸಿ</button>
+  </form>
 
-    <!-- document.getElementsByClassName Example -->
-    <div class="section">
-        <h2>document.getElementsByClassName Example</h2>
-        <p class="group">Group 1</p>
-        <p class="group">Group 2</p>
-        <p class="group">Group 3</p>
-        <button onclick="highlightGroup()">Highlight Group Items</button>
-    </div>
+  <div id="result"></div>
 
-    <!-- window.open Example -->
-    <div class="section">
-        <h2>window.open Example</h2>
-        <button onclick="openNewWindow()">Open New Window</button>
-    </div>
+  <!-- Include Supabase JS library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    // Replace these with your own Supabase project details
+    const SUPABASE_URL = 'https://your-supabase-url.supabase.co';
+    const SUPABASE_KEY = 'your-public-anon-key';
 
-    <!-- document.write Example -->
-    <div class="section">
-        <h2>document.write Example</h2>
-        <button onclick="writeContent()">Write Content</button>
-        <div id="write-output"></div>
-    </div>
+    // Initialize Supabase client
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    <!-- document.writeln Example -->
-    <div class="section">
-        <h2>document.writeln Example</h2>
-        <button onclick="writeLineContent()">Write Line Content</button>
-        <div id="writeln-output"></div>
-    </div>
+    const getLocationBtn = document.getElementById('getLocationBtn');
+    const gpsStatus = document.getElementById('gpsStatus');
+    const locationPrompt = document.getElementById('locationPrompt');
+    const surveyForm = document.getElementById('surveyForm');
 
-    <!-- window.eval Example -->
-    <div class="section">
-        <h2>window.eval Example</h2>
-        <button onclick="executeEval()">Execute Eval</button>
-    </div>
+    // Request GPS permission when button is clicked
+    getLocationBtn.addEventListener('click', () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, error);
+      } else {
+        gpsStatus.textContent = "ಈ ಸಾಧನದಲ್ಲಿ GPS ಸೌಲಭ್ಯ ಲಭ್ಯವಿಲ್ಲ.";
+      }
+    });
 
-    <!-- window.setInterval Example -->
-    <div class="section">
-        <h2>window.setInterval Example</h2>
-        <button onclick="startInterval()">Start Interval</button>
-        <button onclick="stopInterval()">Stop Interval</button>
-        <div id="interval-output"></div>
-    </div>
+    function success(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      
+      // Set the hidden fields with GPS coordinates
+      document.getElementById('latitude').value = latitude;
+      document.getElementById('longitude').value = longitude;
+      
+      // Hide the GPS prompt and show the survey form
+      locationPrompt.classList.add('hidden');
+      surveyForm.classList.remove('hidden');
+    }
 
-    <!-- window.addEventListener Example -->
-    <div class="section">
-        <h2>window.addEventListener Example</h2>
-        <button id="event-button">Hover over me</button>
-    </div>
+    function error(err) {
+      gpsStatus.textContent = "GPS ಅನುಮತಿ ನೀಡಲಾಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು GPS ಅನ್ನು ಸಕ್ರಿಯ ಮಾಡಿ ಮತ್ತು ಪುನಃ ಪ್ರಯತ್ನಿಸಿ.";
+    }
 
-    <!-- document.createElement Example -->
-    <div class="section">
-        <h2>document.createElement Example</h2>
-        <button onclick="createNewElement()">Create New Element</button>
-        <div id="element-container"></div>
-    </div>
+    surveyForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Gather the survey data
+      const surveyData = {
+        survey_date: document.getElementById('surveyDate').value,
+        teacher_name: document.getElementById('teacherName').value,
+        serial_number: document.getElementById('serialNumber').value,
+        parent_name: document.getElementById('parentName').value,
+        child_name: document.getElementById('childName').value,
+        age: parseInt(document.getElementById('age').value),
+        status: document.getElementById('status').value,
+        mobile_number: document.getElementById('mobileNumber').value,
+        home_address: document.getElementById('homeAddress').value,
+        notes: document.getElementById('notes').value,
+        latitude: document.getElementById('latitude').value,
+        longitude: document.getElementById('longitude').value
+      };
 
-    <!-- document.captureEvents Example -->
-    <div class="section">
-        <h2>document.captureEvents Example</h2>
-        <button onclick="captureEvents()">Capture Events</button>
-    </div>
-
-    <!-- document.elementFromPoint Example -->
-    <div class="section">
-        <h2>document.elementFromPoint Example</h2>
-        <button onclick="elementFromPoint()">Find Element from Point (50, 50)</button>
-    </div>
-
-    <!-- document.getRootNode Example -->
-    <div class="section">
-        <h2>document.getRootNode Example</h2>
-        <button onclick="getRootNode()">Get Root Node</button>
-    </div>
-
-    <!-- document.getSelection Example -->
-    <div class="section">
-        <h2>document.getSelection Example</h2>
-        <button onclick="getSelectionText()">Get Selected Text</button>
-    </div>
-
-    <!-- document.hasChildNodes Example -->
-    <div class="section">
-        <h2>document.hasChildNodes Example</h2>
-        <button onclick="checkChildNodes()">Check for Child Nodes</button>
-    </div>
-
-    <!-- document.queryCommandEnabled Example -->
-    <div class="section">
-        <h2>document.queryCommandEnabled Example</h2>
-        <button onclick="checkCommandEnabled()">Check if Command Enabled (copy)</button>
-    </div>
-
-    <!-- document.queryCommandState Example -->
-    <div class="section">
-        <h2>document.queryCommandState Example</h2>
-        <button onclick="checkCommandState()">Check Command State (bold)</button>
-    </div>
-
-    <!-- document.cookie Example -->
-    <div class="section">
-        <h2>document.cookie Example</h2>
-        <button onclick="setCookie()">Set Cookie</button>
-        <button onclick="readCookie()">Read Cookie</button>
-    </div>
-
-    <!-- HTMLCanvasElement.toDataURL Example -->
-    <div class="section">
-        <h2>HTMLCanvasElement.toDataURL Example</h2>
-        <button onclick="showCanvasImage()">Show Canvas Image</button>
-        <canvas id="exampleCanvas" width="200" height="200" style="border:1px solid #000;"></canvas>
-        <div id="canvas-output"></div>
-    </div>
-
-    <!-- window.atob Example -->
-    <div class="section">
-        <h2>window.atob Example</h2>
-        <button onclick="decodeBase64()">Decode Base64</button>
-    </div>
-
-    <!-- URL.createObjectURL Example -->
-    <div class="section">
-        <h2>URL.createObjectURL Example</h2>
-        <button onclick="createBlobURL()">Create Blob URL</button>
-    </div>
-
-    <!-- URL.revokeObjectURL Example -->
-    <div class="section">
-        <h2>URL.revokeObjectURL Example</h2>
-        <button onclick="revokeBlobURL()">Revoke Blob URL</button>
-        <div id="blob-url-output"></div>
-    </div>
-
-    <!-- Uint8Array Example -->
-    <div class="section">
-        <h2>Uint8Array Example</h2>
-        <button onclick="showUint8Array()">Show Uint8Array Content</button>
-    </div>
-
-    <!-- Blob Example -->
-    <div class="section">
-        <h2>Blob Example</h2>
-        <button onclick="createBlob()">Create and Show Blob Content</button>
-    </div>
-
-    <!-- Image Constructor Example -->
-    <div class="section">
-        <h2>Image Constructor Example</h2>
-        <button onclick="createImage()">Create Image Object</button>
-    </div>
-
-    <h1>Eval Security Test</h1>
-    <button id="triggerEval">Trigger Eval 7 Times</button>
-
-    <script>
-        document.getElementById('triggerEval').addEventListener('click', function () {
-            for (let i = 0; i < 7; i++) {
-                console.log(`Eval executed: ${i + 1}`);
-                eval(`console.log('This is eval number ${i + 1}')`);
-            }
-        });
-    </script>
-
-    <script>
-        // alert example
-        function showAlert() {
-            alert("Hello, this is an alert!");
+      // Handle image upload if a file is selected
+      const homeImageFile = document.getElementById('homeImage').files[0];
+      if (homeImageFile) {
+        // Create a unique filename (e.g., using a timestamp)
+        const fileName = Date.now() + '_' + homeImageFile.name;
+        
+        // Upload the image to Supabase Storage (ensure you have a bucket called 'home-images')
+        const { data: storageData, error: storageError } = await supabase
+          .storage
+          .from('home-images')
+          .upload(fileName, homeImageFile);
+        
+        if (storageError) {
+          document.getElementById('result').textContent = 'ಚಿತ್ರ ಅಪ್‌ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ದೋಷ: ' + storageError.message;
+          return;
         }
-
-        // getElementById example
-        function changeHeading() {
-            const heading = document.getElementById("heading");
-            heading.innerText = "New Heading";
+        
+        // Retrieve the public URL of the uploaded image
+        const { publicURL, error: urlError } = supabase
+          .storage
+          .from('home-images')
+          .getPublicUrl(fileName);
+        
+        if (urlError) {
+          document.getElementById('result').textContent = 'ಚಿತ್ರ URL ಪಡೆಯುವಲ್ಲಿ ದೋಷ: ' + urlError.message;
+          return;
         }
-
-        // getElementsByTagName example
-        function highlightItems() {
-            const items = document.getElementsByTagName("li");
-            for (let item of items) {
-                item.style.color = "red";
-            }
-        }
-
-        // getElementsByClassName example
-        function highlightGroup() {
-            const groups = document.getElementsByClassName("group");
-            for (let group of groups) {
-                group.style.backgroundColor = "yellow";
-            }
-        }
-
-        // window.open example
-        function openNewWindow() {
-            window.open("https://www.example.com", "_blank");
-        }
-
-        // document.write example
-        function writeContent() {
-            document.getElementById("write-output").innerHTML = "";
-            document.write("This text is written using document.write.<br>");
-            document.getElementById("write-output").innerHTML = "Content replaced by document.write.";
-        }
-
-        // document.writeln example
-        function writeLineContent() {
-            document.getElementById("writeln-output").innerHTML = "";
-            document.writeln("This line is written using document.writeln.");
-            document.getElementById("writeln-output").innerHTML = "Content replaced by document.writeln.";
-        }
-
-        // eval example
-        function executeEval() {
-            eval("console.log('Eval executed: 2 + 2 =', 2 + 2);");
-        }
-
-        // setInterval example
-        let intervalId;
-        function startInterval() {
-            intervalId = setInterval(() => {
-                const output = document.getElementById("interval-output");
-                output.innerText = "Interval running: " + new Date().toLocaleTimeString();
-            }, 1000);
-        }
-        function stopInterval() {
-            clearInterval(intervalId);
-        }
-
-        // addEventListener example
-        document.getElementById("event-button").addEventListener("mouseover", function() {
-            alert("You hovered over the button!");
-        });
-
-        // createElement example
-        function createNewElement() {
-            const container = document.getElementById("element-container");
-            const newElement = document.createElement("p");
-            newElement.innerText = "I am a new element!";
-            container.appendChild(newElement);
-        }
-
-        // captureEvents example
-        function captureEvents() {
-            document.captureEvents(Event.CLICK);
-            alert("Event capture started. Click anywhere!");
-        }
-
-        // elementFromPoint example
-        function elementFromPoint() {
-            const element = document.elementFromPoint(50, 50);
-            alert(`Element at (50, 50): ${element.tagName}`);
-        }
-
-        // getRootNode example
-        function getRootNode() {
-            const rootNode = document.getRootNode();
-            alert(`Root node: ${rootNode.nodeName}`);
-        }
-
-        // getSelection example
-        function getSelectionText() {
-            const selection = document.getSelection().toString();
-            alert(`Selected text: ${selection}`);
-        }
-
-        // hasChildNodes example
-        function checkChildNodes() {
-            const hasChildren = document.body.hasChildNodes();
-            alert(`Document body has child nodes: ${hasChildren}`);
-        }
-
-        // queryCommandEnabled example
-        function checkCommandEnabled() {
-            const isEnabled = document.queryCommandEnabled("copy");
-            alert(`Is 'copy' command enabled: ${isEnabled}`);
-        }
-
-        // queryCommandState example
-        function checkCommandState() {
-            const isBold = document.queryCommandState("bold");
-            alert(`Is 'bold' command active: ${isBold}`);
-        }
-
-        // cookie example
-        function setCookie() {
-            document.cookie = "testCookie=Hello; path=/";
-            alert("Cookie set: testCookie=Hello");
-        }
-        function readCookie() {
-            alert(`Cookie: ${document.cookie}`);
-        }
-
-        // toDataURL example
-        function showCanvasImage() {
-            const canvas = document.getElementById("exampleCanvas");
-            const ctx = canvas.getContext("2d");
-            ctx.fillStyle = "#FF0000";
-            ctx.fillRect(20, 20, 150, 100);
-            const dataURL = canvas.toDataURL();
-            document.getElementById("canvas-output").innerText = `Canvas Data URL: ${dataURL}`;
-        }
-
-        // atob example
-        function decodeBase64() {
-            const base64String = "SGVsbG8gd29ybGQ=";
-            const decoded = atob(base64String);
-            alert(`Decoded string: ${decoded}`);
-        }
-
-        // createObjectURL example
-        let blobUrl;
-        function createBlobURL() {
-            const blob = new Blob(["Hello, world!"], { type: "text/plain" });
-            blobUrl = URL.createObjectURL(blob);
-            document.getElementById("blob-url-output").innerHTML = `<a href="${blobUrl}" target="_blank">Open Blob URL</a>`;
-        }
-
-        // revokeObjectURL example
-        function revokeBlobURL() {
-            if (blobUrl) {
-                URL.revokeObjectURL(blobUrl);
-                document.getElementById("blob-url-output").innerText = "Blob URL revoked.";
-            }
-        }
-
-        // Uint8Array example
-        function showUint8Array() {
-            const array = new Uint8Array([10, 20, 30, 40, 50]);
-            alert(`Uint8Array content: ${array}`);
-        }
-
-        // Blob example
-        function createBlob() {
-            const blob = new Blob(["Hello, world!"], { type: "text/plain" });
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                alert(`Blob content: ${e.target.result}`);
-            };
-            reader.readAsText(blob);
-        }
-
-        // Image constructor example
-        function createImage() {
-            const img = new Image();
-            img.src = "https://via.placeholder.com/150";
-            document.body.appendChild(img);
-        }
-    </script>
+        surveyData.home_image_url = publicURL;
+      }
+      
+      // Insert the survey data into a Supabase table (ensure you have created a table named 'surveys')
+      let { data, error } = await supabase
+        .from('surveys')
+        .insert([ surveyData ]);
+      
+      if (error) {
+        document.getElementById('result').textContent = 'ಡೇಟಾ ಸಂಗ್ರಹಿಸುವಲ್ಲಿ ದೋಷ: ' + error.message;
+      } else {
+        document.getElementById('result').textContent = 'ಸಮರ್ಪಣೆ ಯಶಸ್ವಿಯಾಗಿದೆ!';
+        surveyForm.reset();
+      }
+    });
+  </script>
 </body>
 </html>
