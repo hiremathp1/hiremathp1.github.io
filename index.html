@@ -6,7 +6,6 @@
   <title>ಮನೆಮನೆ ಸಮೀಕ್ಷಾ ಪ್ರಪತ್ರ</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; }
-    .hidden { display: none; }
     label { display: block; margin-top: 10px; }
     input, select, textarea { width: 100%; max-width: 400px; margin-top: 5px; }
     button { margin-top: 15px; padding: 8px 16px; }
@@ -26,15 +25,13 @@
   <h3>ಮನೆಮನೆ ಸಮೀಕ್ಷಾ ಪ್ರಪತ್ರ (2025–26 ಶೈಕ್ಷಣಿಕ ವರ್ಷ)</h3>
   <h4>"ಕನ್ನಡ ಕಲಿಯೋಣ, ಶಾಲೆಗೆ ಬರುವೋಣ" ಅಭಿಯಾನ</h4>
 
-  <!-- GPS Permission Prompt -->
-  <div id="locationPrompt">
-    <p>ದಯವಿಟ್ಟು ನಿಮ್ಮ GPS ಅನ್ನು ಅನುಮತಿಸಿ (Allow GPS) ಮಾಡಿ.</p>
-    <button id="getLocationBtn">GPS ಅನುಮತಿ ನೀಡಿ</button>
-    <p id="gpsStatus" class="error"></p>
-  </div>
+  <!-- GPS Button (Always visible) -->
+  <p>ದಯವಿಟ್ಟು ಕೆಳಗಿನ ಬಟನ್ ಒತ್ತಿ, ನಿಮ್ಮ GPS ವಿವರಗಳನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ತುಂಬಿಕೊಳ್ಳಲು:</p>
+  <button id="getLocationBtn">GPS ಅನುಮತಿ ನೀಡಿ</button>
+  <p id="gpsStatus" class="error"></p>
 
-  <!-- Survey Form: Hidden until GPS is enabled -->
-  <form id="surveyForm" class="hidden">
+  <!-- Survey Form (Always Visible) -->
+  <form id="surveyForm">
     <hr>
     <h3>ಮನೆಮನೆ ಸಮೀಕ್ಷೆ ವಿವರಗಳು</h3>
     <label for="serialNumber">ಕ್ರಮ ಸಂಖ್ಯೆ:</label>
@@ -49,7 +46,7 @@
     <label for="age">ವಯಸ್ಸು:</label>
     <input type="number" id="age" name="age" required>
     
-    <label for="status">ಈಗ ಏನು ಮಾಡುತ್ತಿದ್ದಾರೆ? (ಹಾಜರಾಗಿದ್ದಾರೆ / ಡ್ರಾಪೌಟ್):</label>
+    <label for="status">ಈಗ ಏನು ಮಾಡಿದ್ದಾರೆ? (ಹಾಜರಾಗಿದ್ದಾರೆ / ಡ್ರಾಪೌಟ್):</label>
     <select id="status" name="status" required>
       <option value="ಹಾಜರಾಗಿದ್ದಾರೆ">ಹಾಜರಾಗಿದ್ದಾರೆ</option>
       <option value="ಡ್ರಾಪೌಟ್">ಡ್ರಾಪೌಟ್</option>
@@ -67,7 +64,7 @@
     <label for="homeImage">ಮನೆ ಚಿತ್ರದ ಅಪ್‌ಲೋಡ್:</label>
     <input type="file" id="homeImage" name="homeImage" accept="image/*">
     
-    <!-- Hidden fields to store GPS coordinates -->
+    <!-- Hidden fields to store GPS coordinates (these remain hidden, but the form is visible) -->
     <input type="hidden" id="latitude" name="latitude">
     <input type="hidden" id="longitude" name="longitude">
     
@@ -88,10 +85,8 @@
 
     const getLocationBtn = document.getElementById('getLocationBtn');
     const gpsStatus = document.getElementById('gpsStatus');
-    const locationPrompt = document.getElementById('locationPrompt');
-    const surveyForm = document.getElementById('surveyForm');
 
-    // Request GPS permission when button is clicked.
+    // Request GPS permission and fill hidden fields when button is clicked.
     getLocationBtn.addEventListener('click', () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(success, error);
@@ -104,20 +99,19 @@
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
       
-      // Set the hidden fields with GPS coordinates.
+      // Set the hidden fields with the GPS coordinates.
       document.getElementById('latitude').value = latitude;
       document.getElementById('longitude').value = longitude;
       
-      // Hide the GPS prompt and show the survey form.
-      locationPrompt.classList.add('hidden');
-      surveyForm.classList.remove('hidden');
+      gpsStatus.textContent = "GPS ವಿವರಗಳನ್ನು ಪಡೆದಿದೆ.";
     }
 
     function error(err) {
-      gpsStatus.textContent = "GPS ಅನುಮತಿ ನೀಡಲಾಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು GPS ಅನ್ನು ಸಕ್ರಿಯ ಮಾಡಿ ಮತ್ತು ಪುನಃ ಪ್ರಯತ್ನಿಸಿ.";
+      gpsStatus.textContent = "GPS ಅನುಮತಿ ನೀಡಲಾಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಸಾಕ್ಷ್ಯಪಡಿಸಿ.";
     }
 
     // Handle form submission.
+    const surveyForm = document.getElementById('surveyForm');
     surveyForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       
@@ -140,10 +134,10 @@
       // Handle image upload if a file is selected.
       const homeImageFile = document.getElementById('homeImage').files[0];
       if (homeImageFile) {
-        // Create a unique filename (using timestamp).
+        // Create a unique filename (using a timestamp).
         const fileName = Date.now() + '_' + homeImageFile.name;
         
-        // Upload the image to Supabase Storage (ensure you have a bucket called 'home-images').
+        // Upload the image to Supabase Storage (ensure you have created a bucket named 'home-images').
         const { data: storageData, error: storageError } = await supabase
           .storage
           .from('home-images')
