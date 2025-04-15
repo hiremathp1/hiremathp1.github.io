@@ -1,178 +1,321 @@
 <!DOCTYPE html>
 <html lang="kn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ಮನೆಮನೆ ಸಮೀಕ್ಷಾ ಪ್ರಪತ್ರ</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    label { display: block; margin-top: 10px; }
-    input, select, textarea { width: 100%; max-width: 400px; margin-top: 5px; }
-    button { margin-top: 15px; padding: 8px 16px; }
-    .error { color: red; }
-    hr { margin: 20px 0; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ಮನೆಮನೆ ಸಮೀಕ್ಷಾ</title>
+    <style>
+        /* Body styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f0f0f0 0%, #ffffff 100%);
+        }
+        /* Container styling */
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3, h4 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        p, label {
+            color: #555;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            margin-top: 5px;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 16px;
+            background-color: #007BFF;
+            border: none;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        hr {
+            margin: 20px 0;
+        }
+
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1>ವಿವೇಕಾನಂದ ಗ್ರಾಮೀಣ ವಿದ್ಯಾ ಸಂಸ್ಥೆ</h1>
+        <h2>ಭುವನೇಶ್ವರಿ ಆದರ್ಶ ಹಿರಿಯ ಪ್ರಾಥಮಿಕ ಶಾಲೆ, ಕೊಡಿಯಾಲಹೊಸಪೇಟೆ</h2>
+        <p>
+            ಸರ್ವೇ ದಿನಾಂಕ:
+            <input type="date" id="surveyDate" required>
+            <br>
+            ಶಿಕ್ಷಕರ ಹೆಸರು:
+            <select id="teacherName" name="teacherName" required>
+                <option value="">-- ಆಯ್ಕೆಮಾಡಿ --</option>
+                <option value="ಶ್ರೀ ಮಲ್ಲಿಕಾರ್ಜುನ ಭಾವಿಕಟ್ಟಿ">ಶ್ರೀ ಮಲ್ಲಿಕಾರ್ಜುನ ಭಾವಿಕಟ್ಟಿ</option>
+                <option value="ಶ್ರೀ ಶಿವಯ್ಯ ಹಿರೇಮಠ">ಶ್ರೀ ಶಿವಯ್ಯ ಹಿರೇಮಠ</option>
+                <option value="ಶ್ರೀ ದೇವರಾಜ್ ಬಿ.">ಶ್ರೀ ದೇವರಾಜ್ ಬಿ.</option>
+                <option value="ಶ್ರೀಮತಿ ರೇಖಾ ಎಂ.">ಶ್ರೀಮತಿ ರೇಖಾ ಎಂ.</option>
+                <option value="ಶ್ರೀಮತಿ ರೇಣುಕಮ್ಮ ಎನ್.">ಶ್ರೀಮತಿ ರೇಣುಕಮ್ಮ ಎನ್.</option>
+            </select>
+        </p>
+        <h3>ಮನೆಮನೆ ಸಮೀಕ್ಷಾ ಪ್ರಪತ್ರ (2025–26 ಶೈಕ್ಷಣಿಕ ವರ್ಷ)</h3>
+        <h4>"ಕನ್ನಡ ಕಲಿಯೋಣ, ಶಾಲೆಗೆ ಬರುವೋಣ" ಅಭಿಯಾನ</h4>
+        <p id="gpsStatus" class="error"></p>
+        <!-- Survey Form -->
+        <form id="surveyForm">
+            <hr>
+            <h3>ಮನೆಮನೆ ಸಮೀಕ್ಷೆ ವಿವರಗಳು</h3>
+            <!-- Serial number auto-populated based on teacher's survey count -->
+            <label for="serialNumber">ಕ್ರಮ ಸಂಖ್ಯೆ:</label>
+            <input type="text" id="serialNumber" name="serialNumber" readonly>
+            <label for="parentName">ಪೋಷಕರ / ಪಾಲಕರ ಹೆಸರು:</label>
+            <input type="text" id="parentName" name="parentName" required>
+            <!-- Container for multiple kid entries -->
+            <div id="kidsContainer">
+                <div class="kidEntry">
+                    <h4 class="kidLabel">ಮಕ್ಕಳು 1</h4>
+                    <label>ಮಕ್ಕಳ ಹೆಸರು:</label>
+                    <input type="text" name="kidNames[]" required>
+                    <label>ವಯಸ್ಸು:</label>
+                    <input type="number" name="kidAges[]" required>
+                    <div class="schoolContainer" style="display: none;">
+                        <label>13ಕ್ಕಿಂತ ಕೆಳದ ಮಕ್ಕಳ ಶಾಲೆ:</label>
+                        <input type="text" name="kidSchool[]" placeholder="ಶಾಲೆ ಹೆಸರು">
+                    </div>
+                </div>
+            </div>
+            <button type="button" id="addKidBtn">ಹೆಚ್ಚು ಮಕ್ಕಳ ವಿವರ ಸೇರಿಸಿ</button>
+            <label for="mobileNumber">ಮೊಬೈಲ್ ಸಂಖ್ಯೆ:</label>
+            <input type="tel" id="mobileNumber" name="mobileNumber" required>
+            <label for="homeAddress">ಗೃಹ ವಿಳಾಸ:</label>
+            <textarea id="homeAddress" name="homeAddress" required></textarea>
+            <label for="notes">ಟಿಪ್ಪಣಿ / ಗಮನಾರದತೆ:</label>
+            <textarea id="notes" name="notes"></textarea>
+            <label for="familyIncome">ಅಂದಾಜು ಕುಟುಂಬದ ಆದಾಯ:</label>
+            <input type="text" id="familyIncome" name="familyIncome">
+            <label for="homeImage">ಮನೆಚಿತ್ರದ ಅಪ್‌ಲೋಡ್:</label>
+            <input type="file" id="homeImage" name="homeImage" accept="image/*">
+            <!-- Hidden fields to store GPS coordinates -->
+            <input type="hidden" id="latitude" name="latitude">
+            <input type="hidden" id="longitude" name="longitude">
+            <button type="submit">ಸಮರ್ಪಿಸಿ</button>
+        </form>
+        <div id="result"></div>
+    </div>
+    <!-- Include Supabase JS library from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script>
+        // Supabase connection details.
+        // NOTE: Use your actual public anon key for your Supabase project.
+        const SUPABASE_URL = 'https://epiitsrqnmiastgiarpk.supabase.co';
+        const SUPABASE_KEY = 'your-public-anon-key';
 
-  <h1>ವಿವೇಕಾನಂದ ಗ್ರಾಮೀಣ ವಿದ್ಯಾ ಸಂಸ್ಥೆ</h1>
-  <h2>ಭುವನೇಶ್ವರಿ ಆದರ್ಶ ಹಿರಿಯ ಪ್ರಾಥಮಿಕ ಶಾಲೆ, ಕೊಡಿಯಾಲಹೊಸಪೇಟೆ</h2>
-  <p>
-    ಸರ್ವೇ ದಿನಾಂಕ: <input type="date" id="surveyDate" required>
-    <br>
-    ಶಿಕ್ಷಕರ ಹೆಸರು: <input type="text" id="teacherName" placeholder="ಶಿಕ್ಷಕರ ಹೆಸರು" required>
-  </p>
-  <h3>ಮನೆಮನೆ ಸಮೀಕ್ಷಾ ಪ್ರಪತ್ರ (2025–26 ಶೈಕ್ಷಣಿಕ ವರ್ಷ)</h3>
-  <h4>"ಕನ್ನಡ ಕಲಿಯೋಣ, ಶಾಲೆಗೆ ಬರುವೋಣ" ಅಭಿಯಾನ</h4>
+        // Direct PostgreSQL connection string (for testing or direct queries).
+        const PG_CONNECTION_STRING = 'postgresql://postgres:vgvsHarihar@db.epiitsrqnmiastgiarpk.supabase.co:5432/postgres';
+        console.log("PostgreSQL Connection String:", PG_CONNECTION_STRING);
 
-  <!-- GPS Button (Always visible) -->
-  <p>ದಯವಿಟ್ಟು ಕೆಳಗಿನ ಬಟನ್ ಒತ್ತಿ, ನಿಮ್ಮ GPS ವಿವರಗಳನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ತುಂಬಿಕೊಳ್ಳಲು:</p>
-  <button id="getLocationBtn">GPS ಅನುಮತಿ ನೀಡಿ</button>
-  <p id="gpsStatus" class="error"></p>
+        // Initialize Supabase client.
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  <!-- Survey Form (Always Visible) -->
-  <form id="surveyForm">
-    <hr>
-    <h3>ಮನೆಮನೆ ಸಮೀಕ್ಷೆ ವಿವರಗಳು</h3>
-    <label for="serialNumber">ಕ್ರಮ ಸಂಖ್ಯೆ:</label>
-    <input type="text" id="serialNumber" name="serialNumber" required>
-    
-    <label for="parentName">ಪೋಷಕರ / ಪಾಲಕರ ಹೆಸರು:</label>
-    <input type="text" id="parentName" name="parentName" required>
-    
-    <label for="childName">ಮಕ್ಕಳ ಹೆಸರು:</label>
-    <input type="text" id="childName" name="childName" required>
-    
-    <label for="age">ವಯಸ್ಸು:</label>
-    <input type="number" id="age" name="age" required>
-    
-    <label for="status">ಈಗ ಏನು ಮಾಡಿದ್ದಾರೆ? (ಹಾಜರಾಗಿದ್ದಾರೆ / ಡ್ರಾಪೌಟ್):</label>
-    <select id="status" name="status" required>
-      <option value="ಹಾಜರಾಗಿದ್ದಾರೆ">ಹಾಜರಾಗಿದ್ದಾರೆ</option>
-      <option value="ಡ್ರಾಪೌಟ್">ಡ್ರಾಪೌಟ್</option>
-    </select>
-    
-    <label for="mobileNumber">ಮೊಬೈಲ್ ಸಂಖ್ಯೆ:</label>
-    <input type="tel" id="mobileNumber" name="mobileNumber" required>
-    
-    <label for="homeAddress">ಗೃಹ ವಿಳಾಸ:</label>
-    <textarea id="homeAddress" name="homeAddress" required></textarea>
-    
-    <label for="notes">ಟಿಪ್ಪಣಿ / ಗಮನಾರ್ಹತೆ:</label>
-    <textarea id="notes" name="notes"></textarea>
-    
-    <label for="homeImage">ಮನೆ ಚಿತ್ರದ ಅಪ್‌ಲೋಡ್:</label>
-    <input type="file" id="homeImage" name="homeImage" accept="image/*">
-    
-    <!-- Hidden fields to store GPS coordinates (these remain hidden, but the form is visible) -->
-    <input type="hidden" id="latitude" name="latitude">
-    <input type="hidden" id="longitude" name="longitude">
-    
-    <button type="submit">ಸಮರ್ಪಿಸಿ</button>
-  </form>
+        const gpsStatus = document.getElementById('gpsStatus');
+        let watchId; // Store GPS watch identifier
 
-  <div id="result"></div>
+        // Set default survey date on page load.
+        document.addEventListener('DOMContentLoaded', () => {
+            const surveyDateInput = document.getElementById('surveyDate');
+            if (surveyDateInput) {
+                const today = new Date().toISOString().split('T')[0];
+                surveyDateInput.value = today;
+            }
+            // Update serial number when teacher is selected.
+            const teacherSelect = document.getElementById('teacherName');
+            teacherSelect.addEventListener('change', updateSerialNumber);
+        });
 
-  <!-- Include Supabase JS library from CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script>
-    // Replace these with your actual Supabase project details.
-    const SUPABASE_URL = 'https://your-supabase-url.supabase.co';
-    const SUPABASE_KEY = 'your-public-anon-key';
+        // Simulated survey counts for each teacher.
+        const teacherSurveyCount = {
+            "ಶ್ರೀ ಮல்லಿಕಾರ್ಜುನ ಭಾವಿಕಟ್ಟಿ": 5,
+            "ಶ್ರೀ ಶಿವಯ್ಯ ಹಿರೇಮಠ": 3,
+            "ಶ್ರೀ ದೇವರಾಜ್ ಬಿ.": 7,
+            "ಶ್ರೀಮತಿ ರೇಖಾ ಎಂ.": 2,
+            "ಶ್ರೀಮತಿ ರೇಣುಕಮ್ಮ ಎನ್.": 4
+        };
 
-    // Initialize Supabase client.
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-    const getLocationBtn = document.getElementById('getLocationBtn');
-    const gpsStatus = document.getElementById('gpsStatus');
-
-    // Request GPS permission and fill hidden fields when button is clicked.
-    getLocationBtn.addEventListener('click', () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(success, error);
-      } else {
-        gpsStatus.textContent = "ಈ ಸಾಧನದಲ್ಲಿ GPS ಸೌಲಭ್ಯ ಲಭ್ಯವಿಲ್ಲ.";
-      }
-    });
-
-    function success(position) {
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
-      
-      // Set the hidden fields with the GPS coordinates.
-      document.getElementById('latitude').value = latitude;
-      document.getElementById('longitude').value = longitude;
-      
-      gpsStatus.textContent = "GPS ವಿವರಗಳನ್ನು ಪಡೆದಿದೆ.";
-    }
-
-    function error(err) {
-      gpsStatus.textContent = "GPS ಅನುಮತಿ ನೀಡಲಾಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಸಾಕ್ಷ್ಯಪಡಿಸಿ.";
-    }
-
-    // Handle form submission.
-    const surveyForm = document.getElementById('surveyForm');
-    surveyForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      // Gather the survey data.
-      const surveyData = {
-        survey_date: document.getElementById('surveyDate').value,
-        teacher_name: document.getElementById('teacherName').value,
-        serial_number: document.getElementById('serialNumber').value,
-        parent_name: document.getElementById('parentName').value,
-        child_name: document.getElementById('childName').value,
-        age: parseInt(document.getElementById('age').value),
-        status: document.getElementById('status').value,
-        mobile_number: document.getElementById('mobileNumber').value,
-        home_address: document.getElementById('homeAddress').value,
-        notes: document.getElementById('notes').value,
-        latitude: document.getElementById('latitude').value,
-        longitude: document.getElementById('longitude').value
-      };
-
-      // Handle image upload if a file is selected.
-      const homeImageFile = document.getElementById('homeImage').files[0];
-      if (homeImageFile) {
-        // Create a unique filename (using a timestamp).
-        const fileName = Date.now() + '_' + homeImageFile.name;
-        
-        // Upload the image to Supabase Storage (ensure you have created a bucket named 'home-images').
-        const { data: storageData, error: storageError } = await supabase
-          .storage
-          .from('home-images')
-          .upload(fileName, homeImageFile);
-        
-        if (storageError) {
-          document.getElementById('result').textContent = 'ಚಿತ್ರ ಅಪ್‌ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ದೋಷ: ' + storageError.message;
-          return;
+        // When the teacher selection changes, update the serial number.
+        function updateSerialNumber() {
+            const teacherSelect = document.getElementById('teacherName');
+            const selectedTeacher = teacherSelect.value;
+            const serialNumberInput = document.getElementById('serialNumber');
+            if (selectedTeacher && teacherSurveyCount[selectedTeacher] !== undefined) {
+                // Increment the simulated count by 1.
+                serialNumberInput.value = teacherSurveyCount[selectedTeacher] + 1;
+            } else {
+                serialNumberInput.value = "";
+            }
         }
-        
-        // Retrieve the public URL of the uploaded image.
-        const { publicURL, error: urlError } = supabase
-          .storage
-          .from('home-images')
-          .getPublicUrl(fileName);
-        
-        if (urlError) {
-          document.getElementById('result').textContent = 'ಚಿತ್ರ URL ಪಡೆಯುವಲ್ಲಿ ದೋಷ: ' + urlError.message;
-          return;
+
+        // Start watching GPS as soon as the page loads.
+        document.addEventListener('DOMContentLoaded', startWatchingLocation);
+        function startWatchingLocation() {
+            if (navigator.geolocation) {
+                watchId = navigator.geolocation.watchPosition(
+                    (position) => {
+                        document.getElementById('latitude').value = position.coords.latitude;
+                        document.getElementById('longitude').value = position.coords.longitude;
+                        gpsStatus.textContent = "GPS ಮಾಹಿತಿ ಪಡೆಯುತ್ತಿದೆ...";
+                    },
+                    (err) => {
+                        gpsStatus.textContent = "GPS ಪ್ರಮಾಣಿಕರಣ ನಮೂದಿಲಾಗಲಿಲ್ಲ.";
+                    },
+                    { enableHighAccuracy: true }
+                );
+            } else {
+                gpsStatus.textContent = "ಈ ಸಾಧನದಲ್ಲಿ GPS ಸೌಲಭ್ಯ ಲಭ್ಯವಿಲ್ಲ.";
+            }
         }
-        surveyData.home_image_url = publicURL;
-      }
-      
-      // Insert the survey data into the Supabase table 'surveys'.
-      let { data, error } = await supabase
-        .from('surveys')
-        .insert([ surveyData ]);
-      
-      if (error) {
-        document.getElementById('result').textContent = 'ಡೇಟಾ ಸಂಗ್ರಹಿಸುವಲ್ಲಿ ದೋಷ: ' + error.message;
-      } else {
-        document.getElementById('result').textContent = 'ಸಮರ್ಪಣೆ ಯಶಸ್ವಿಯಾಗಿದೆ!';
-        surveyForm.reset();
-      }
-    });
-  </script>
+
+        // Add additional kid entries.
+        const addKidBtn = document.getElementById('addKidBtn');
+        addKidBtn.addEventListener('click', () => {
+            const kidsContainer = document.getElementById('kidsContainer');
+            const kidEntry = document.createElement('div');
+            kidEntry.className = 'kidEntry';
+            // Create a label for the kid number.
+            const kidLabel = document.createElement('h4');
+            kidLabel.className = 'kidLabel';
+            kidLabel.textContent = "ಮಕ್ಕಳು " + (kidsContainer.children.length + 1);
+            kidEntry.appendChild(kidLabel);
+            // Inner HTML for kid details.
+            kidEntry.innerHTML += `
+                        <label>ಮಕ್ಕಳ ಹೆಸರು:</label>
+                        <input type="text" name="kidNames[]" required>
+                        <label>ವಯಸ್ಸು:</label>
+                        <input type="number" name="kidAges[]" required>
+                        <div class="schoolContainer" style="display: none;">
+                            <label>13ಕ್ಕಿಂತ ಕೆಳದ ಮಕ್ಕಳ ಶಾಲೆ:</label>
+                            <input type="text" name="kidSchool[]" placeholder="ಶಾಲೆ ಹೆಸರು">
+                        </div>
+                    `;
+            kidsContainer.appendChild(kidEntry);
+        });
+
+        // Toggle school input display based on kid's age.
+        document.addEventListener('input', function (event) {
+            if (event.target.name === 'kidAges[]') {
+                const age = parseInt(event.target.value);
+                const schoolContainer = event.target.closest('.kidEntry').querySelector('.schoolContainer');
+                schoolContainer.style.display = (age < 13) ? 'block' : 'none';
+            }
+        });
+
+        // Handle form submission.
+        const surveyForm = document.getElementById('surveyForm');
+        surveyForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Before submission, try to update the GPS if available.
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    document.getElementById('latitude').value = position.coords.latitude;
+                    document.getElementById('longitude').value = position.coords.longitude;
+                    await submitForm();
+                }, async () => {
+                    await submitForm();
+                });
+            } else {
+                submitForm();
+            }
+        });
+
+        async function submitForm() {
+            // Gather kid details from all dynamically added fields.
+            const kidNames = Array.from(document.getElementsByName('kidNames[]')).map(el => el.value);
+            const kidAges = Array.from(document.getElementsByName('kidAges[]')).map(el => parseInt(el.value));
+            const kidSchools = Array.from(document.getElementsByName('kidSchool[]')).map(el => el.value);
+            const surveyData = {
+                survey_date: document.getElementById('surveyDate').value,
+                teacher_name: document.getElementById('teacherName').value,
+                serial_number: document.getElementById('serialNumber').value,
+                parent_name: document.getElementById('parentName').value,
+                kid_names: kidNames,
+                kid_ages: kidAges,
+                kid_schools: kidSchools,
+                mobile_number: document.getElementById('mobileNumber').value,
+                home_address: document.getElementById('homeAddress').value,
+                notes: document.getElementById('notes').value,
+                family_income: document.getElementById('familyIncome').value,
+                latitude: document.getElementById('latitude').value,
+                longitude: document.getElementById('longitude').value
+            };
+            // Handle home image upload if a file is selected.
+            const homeImageFile = document.getElementById('homeImage').files[0];
+            if (homeImageFile) {
+                const fileName = Date.now() + '_' + homeImageFile.name;
+                const { data: storageData, error: storageError } = await supabase
+                    .storage
+                    .from('home-images')
+                    .upload(fileName, homeImageFile);
+                if (storageError) {
+                    document.getElementById('result').textContent = 'ಚಿತ್ರ ಅಪ್‌ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ದೋಷ: ' + storageError.message;
+                    return;
+                }
+                const { publicURL, error: urlError } = supabase
+                    .storage
+                    .from('home-images')
+                    .getPublicUrl(fileName);
+                if (urlError) {
+                    document.getElementById('result').textContent = 'ಚಿತ್ರ URL ಪಡೆಯುವಲ್ಲಿ ದೋಷ: ' + urlError.message;
+                    return;
+                }
+                surveyData.home_image_url = publicURL;
+            }
+            // Insert the survey data into the Supabase 'surveys' table.
+            let { data, error: insertError } = await supabase
+                .from('surveys')
+                .insert([surveyData]);
+            if (insertError) {
+                document.getElementById('result').textContent = 'ಡೇಟಾ ಸಂಗ್ರಹಿಸುವಲ್ಲಿ ದೋಷ: ' + insertError.message;
+            } else {
+                document.getElementById('result').textContent = 'ಸಮರ್ಪಣೆ ಯಶಸ್ವಿಯಾಗಿದೆ!';
+                surveyForm.reset();
+            }
+        }
+    </script>
 </body>
 </html>
