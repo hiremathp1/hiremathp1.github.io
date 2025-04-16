@@ -1,31 +1,39 @@
 <?php
 // insert_test.php
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *'); // only needed if your HTML is on a different origin
 
-// Only allow POST
+// ---- CORS & preflight handling ----
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+  // Preflight request; no body
+  exit;
+}
+header('Content-Type: application/json');
+
+// Only accept POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
   http_response_code(405);
   echo json_encode(['error' => 'Method not allowed']);
   exit;
 }
 
-// Read and decode incoming JSON
+// Read incoming JSON
 $payload = file_get_contents('php://input');
-$data = json_decode($payload, true);
+$data    = json_decode($payload, true);
 if (!is_array($data)) {
   http_response_code(400);
   echo json_encode(['error' => 'Invalid JSON']);
   exit;
 }
 
-// Database credentials
-$host     = 'your_mysql_host';      // e.g. 'localhost'
-$user     = 'u920644983_lgwmp';
-$pass     = 'Vgvs@2025';
-$dbname   = 'u920644983_dDBVk';
+// --- Database credentials ---
+$host   = 'localhost';
+$user   = 'u920644983_lgwmp';
+$pass   = 'Vgvs@2025';
+$dbname = 'u920644983_dDBVk';
 
-// Connect
+// Connect to MySQL
 $mysqli = new mysqli($host, $user, $pass, $dbname);
 if ($mysqli->connect_error) {
   http_response_code(500);
@@ -33,7 +41,7 @@ if ($mysqli->connect_error) {
   exit;
 }
 
-// Prepare insert (only the columns you sent in testData)
+// Prepare INSERT
 $stmt = $mysqli->prepare("
   INSERT INTO `vgvssurvey` (
     `survey_date`,`teacher_name`,`serial_number`,`parent_name`,
@@ -50,9 +58,9 @@ if (!$stmt) {
   exit;
 }
 
-// Bind parameters in the correct order
+// Bind parameters (types: s=string, i=int, d=double)
 $stmt->bind_param(
-  'sssssisisiissssidd',
+  'sssssisisissssssd d',
   $data['survey_date'],
   $data['teacher_name'],
   $data['serial_number'],
@@ -73,10 +81,10 @@ $stmt->bind_param(
   $data['longitude']
 );
 
-// Execute
+// Execute and return JSON result
 if ($stmt->execute()) {
   echo json_encode([
-    'success' => true,
+    'success'   => true,
     'insert_id' => $stmt->insert_id
   ]);
 } else {
