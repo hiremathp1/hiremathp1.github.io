@@ -1,49 +1,49 @@
 <!DOCTYPE html>
 <html lang="kn">
 <head>
-    <meta charset="UTF-8">
-    <title>Survey Test</title>
+  <meta charset="UTF-8">
+  <title>Survey Test</title>
 </head>
 <body>
-    <h1>Send Test Survey Data</h1>
-    <button id="sendTest">Send Test Record</button>
-    <pre id="output"></pre>
+  <h1>Send Test Survey Data</h1>
+  <button id="sendTest">Send Test Record</button>
+  <pre id="output"></pre>
 
-    <script>
-        document.getElementById('sendTest').addEventListener('click', async () => {
-            const testData = {
-                survey_date: '2025-04-17',
-                teacher_name: 'ಶ್ರೀ ಮಲ್ಲಿಕಾರ್ಜುನ ಭಾವಿಕಟ್ಟಿ',
-                serial_number: '6',
-                parent_name: 'ರವಿ ಕುಮಾರ್',
-                child_name1: 'ಅನುಶ್ರೀ',
-                child_age1: 9,
-                child_name2: 'ಸ್ಥುತಿ',
-                child_age2: 7,
-                child_name3: 'ನಿಖಿಲ್',
-                child_age3: 12,
-                mobile_number: '9876543210',
-                home_address: '12, ವಿಜಯನಗರ, ಬೆಂಗಳೂರು',
-                notes: 'ಪರೀಕ್ಷಾನುಕರಣೆ ಪರೀಕ್ಷೆ',
-                family_income: '₹25,000',
-                anualIncome: '300000',
-                home_image_url: 'https://example.com/home.jpg',
-                latitude: 12.9715987,
-                longitude: 77.5945627
-            };
+  <script>
+    document.getElementById('sendTest').addEventListener('click', async () => {
+      const testData = {
+        survey_date:   '2025-04-17',
+        teacher_name:  'ಶ್ರೀ ಮಲ್ಲಿಕಾರ್ಜುನ ಭಾವಿಕಟ್ಟಿ',
+        serial_number: '6',
+        parent_name:   'ರವಿ ಕುಮಾರ್',
+        child_name1:   'ಅನುಶ್ರೀ',
+        child_age1:    9,
+        child_name2:   'ಸ್ಥುತಿ',
+        child_age2:    7,
+        child_name3:   'ನಿಖಿಲ್',
+        child_age3:    12,
+        mobile_number: '9876543210',
+        home_address:  '12, ವಿಜಯನಗರ, ಬೆಂಗಳೂರು',
+        notes:         'ಪರೀಕ್ಷಾನುಕರಣೆ ಪರೀಕ್ಷೆ',
+        family_income: '₹25,000',
+        anualIncome:   '300000',
+        home_image_url:'https://example.com/home.jpg',
+        latitude:      12.9715987,
+        longitude:     77.5945627
+      };
 
-            try {
-                const res = await fetch('insert_test.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(testData)
-                });
-                const json = await res.json();
-                document.getElementById('output').textContent = JSON.stringify(json, null, 2);
-            } catch (err) {
-                document.getElementById('output').textContent = 'Error: ' + err;
-            }
+      try {
+        const res = await fetch('insert_test.php', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify(testData)
         });
-    </script>
+        const json = await res.json();
+        document.getElementById('output').textContent = JSON.stringify(json, null, 2);
+      } catch (err) {
+        document.getElementById('output').textContent = 'Error: ' + err;
+      }
+    });
+  </script>
 </body>
 </html>
