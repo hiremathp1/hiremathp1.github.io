@@ -1,60 +1,87 @@
 <?php
+// insert_test.php
 header('Content-Type: application/json');
-$input = json_decode(file_get_contents('php://input'), true);
+header('Access-Control-Allow-Origin: *'); // only needed if your HTML is on a different origin
 
-$mysqli = new mysqli(
-    'localhost',        // or your host
-    'u920644983_lgwmp',
-    'Vgvs@2025',
-    'u920644983_dDBVk'
-);
-if ($mysqli->connect_errno) {
-    echo json_encode(['error' => 'Connect failed: '.$mysqli->connect_error]);
-    exit;
+// Only allow POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+  http_response_code(405);
+  echo json_encode(['error' => 'Method not allowed']);
+  exit;
 }
 
+// Read and decode incoming JSON
+$payload = file_get_contents('php://input');
+$data = json_decode($payload, true);
+if (!is_array($data)) {
+  http_response_code(400);
+  echo json_encode(['error' => 'Invalid JSON']);
+  exit;
+}
+
+// Database credentials
+$host     = 'your_mysql_host';      // e.g. 'localhost'
+$user     = 'u920644983_lgwmp';
+$pass     = 'Vgvs@2025';
+$dbname   = 'u920644983_dDBVk';
+
+// Connect
+$mysqli = new mysqli($host, $user, $pass, $dbname);
+if ($mysqli->connect_error) {
+  http_response_code(500);
+  echo json_encode(['error' => 'DB connection failed: '.$mysqli->connect_error]);
+  exit;
+}
+
+// Prepare insert (only the columns you sent in testData)
 $stmt = $mysqli->prepare("
-  INSERT INTO vgvssurvey
-    (survey_date, teacher_name, serial_number,
-     parent_name, child_name1, child_age1,
-     child_name2, child_age2, child_name3, child_age3,
-     mobile_number, home_address, notes,
-     family_income, anualIncome, home_image_url,
-     latitude, longitude)
-  VALUES
-    (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  INSERT INTO `vgvssurvey` (
+    `survey_date`,`teacher_name`,`serial_number`,`parent_name`,
+    `child_name1`,`child_age1`,`child_name2`,`child_age2`,`child_name3`,`child_age3`,
+    `mobile_number`,`home_address`,`notes`,`family_income`,`anualIncome`,
+    `home_image_url`,`latitude`,`longitude`
+  ) VALUES (
+    ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+  )
 ");
+if (!$stmt) {
+  http_response_code(500);
+  echo json_encode(['error' => 'Prepare failed: '.$mysqli->error]);
+  exit;
+}
+
+// Bind parameters in the correct order
 $stmt->bind_param(
-  'sssssiiissi sssd d',   // types: s=string, i=int, d=double
-  $input['survey_date'],
-  $input['teacher_name'],
-  $input['serial_number'],
-  $input['parent_name'],
-  $input['child_name1'],
-  $input['child_age1'],
-  $input['child_name2'],
-  $input['child_age2'],
-  $input['child_name3'],
-  $input['child_age3'],
-  $input['mobile_number'],
-  $input['home_address'],
-  $input['notes'],
-  $input['family_income'],
-  $input['anualIncome'],
-  $input['home_image_url'],
-  $input['latitude'],
-  $input['longitude']
+  'sssssisisiissssidd',
+  $data['survey_date'],
+  $data['teacher_name'],
+  $data['serial_number'],
+  $data['parent_name'],
+  $data['child_name1'],
+  $data['child_age1'],
+  $data['child_name2'],
+  $data['child_age2'],
+  $data['child_name3'],
+  $data['child_age3'],
+  $data['mobile_number'],
+  $data['home_address'],
+  $data['notes'],
+  $data['family_income'],
+  $data['anualIncome'],
+  $data['home_image_url'],
+  $data['latitude'],
+  $data['longitude']
 );
 
+// Execute
 if ($stmt->execute()) {
-    echo json_encode([
-      'success' => true,
-      'insert_id' => $stmt->insert_id
-    ]);
+  echo json_encode([
+    'success' => true,
+    'insert_id' => $stmt->insert_id
+  ]);
 } else {
-    echo json_encode([
-      'error' => 'Insert failed: '.$stmt->error
-    ]);
+  http_response_code(500);
+  echo json_encode(['error' => 'Insert failed: '.$stmt->error]);
 }
 
 $stmt->close();
