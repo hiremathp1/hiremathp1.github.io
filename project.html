@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - AIM Interiors</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            color: #000;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .mm-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1002;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #eee;
+        }
+
+        .header-logo img {
+            height: 40px;
+            display: block;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .hamburger-menu {
+            cursor: pointer;
+            width: 32px;
+            height: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1003;
+        }
+
+        .hamburger-menu span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: #000;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+
+        .hamburger-menu.active span:nth-child(1) {
+            transform: translateY(11px) rotate(45deg);
+        }
+        .hamburger-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger-menu.active span:nth-child(3) {
+            transform: translateY(-11px) rotate(-45deg);
+        }
+        
+        .header-contact a {
+            font-size: 16px;
+            font-weight: 500;
+            color: #000;
+            text-decoration: none;
+            padding-bottom: 2px;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        .header-contact a:hover {
+            border-color: #000;
+        }
+
+        /* Overlay Menu */
+        .overlay-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            color: #fff;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translateX(100%);
+            transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+            visibility: hidden;
+        }
+
+        .overlay-menu.active {
+            transform: translateX(0);
+            visibility: visible;
+        }
+
+        .overlay-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            max-width: 1400px;
+            width: 100%;
+            padding: 80px 40px;
+            align-items: center;
+        }
+
+        .overlay-left {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .overlay-image-link {
+            text-decoration: none;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .overlay-image-link img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .overlay-image-link:hover img {
+            transform: scale(1.05);
+        }
+
+        .overlay-image-link span {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.4);
+        }
+
+        .overlay-right {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            justify-content: center;
+        }
+
+        .nav-group {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .nav-group-title {
+            color: #999;
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .overlay-right a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 2.8rem;
+            font-weight: 400;
+            line-height: 1.2;
+            transition: color 0.3s;
+        }
+
+        .overlay-right a:hover {
+            color: #aaa;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 100px;
+            padding: 60px 40px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 80px;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 4rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .page-subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            margin-bottom: 60px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .filter-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666;
+        }
+
+        .filter-select {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            background: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #000;
+        }
+
+        .search-box {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #000;
+        }
+
+        /* Project Grid */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .project-card {
+            text-decoration: none;
+            color: #000;
+            display: block;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-image-wrapper {
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .project-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .project-info {
+            padding: 0 10px;
+        }
+
+        .project-category {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+        
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 400;
+            line-height: 1.3;
+            margin-bottom: 10px;
+        }
+
+        .project-location {
+            font-size: 1rem;
+            color: #888;
+            font-weight: 300;
+        }
+
+        /* Load More Button */
+        .load-more-section {
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .load-more-btn {
+            background: #fff;
+            color: #000;
+            padding: 15px 40px;
+            border: 2px solid #000;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s;
+            clip-path: polygon(0 15%, 15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
+        }
+
+        .load-more-btn:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        /* Project Showcase Section */
+        .project-showcase {
+            margin: 100px auto;
+        }
+
+        .showcase-content {
+            display: grid;
+            grid-template-columns: 40% 60%;
+            align-items: center;
+            background-color: #f0f0f0;
+            min-height: 500px;
+            overflow: hidden;
+        }
+
+        .showcase-text {
+            padding: 50px;
+            position: relative;
+        }
+
+        .showcase-breadcrumb {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .showcase-title {
+            font-size: 2.5rem;
+            font-weight: 500;
+            line-height: 1.3;
+            color: #000;
+        }
+        
+        .showcase-title a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .showcase-pager {
+            position: absolute;
+            bottom: 50px;
+            left: 50px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .showcase-pager button {
+            background: none;
+            border: 1px solid #ccc;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #555;
+            transition: all 0.3s;
+        }
+
+        .showcase-pager button:hover {
+            background-color: #e0e0e0;
+            border-color: #bbb;
+        }
+
+        .showcase-pager span {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .showcase-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            min-height: 500px;
+        }
+
+        /* Footer */
+        .main-footer {
+            background-color: #f0f0f0;
+            padding: 100px 40px;
+            margin-top: 100px;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 60px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+        
+        .footer-btn {
+            display: inline-block;
+            background: transparent;
+            color: #000;
+            border: 2px solid #000;
+            padding: 10px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            clip-path: polygon(0 15%, 15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
+            text-decoration: none;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .footer-btn:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        .footer-column.offices .office-region {
+            border-bottom: 1px solid #000;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .footer-column.offices .office-region:hover {
+            background-color: #e0e0e0;
+        }
+
+        .office-cities {
+            display: none;
+            padding: 20px 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .office-cities.active {
+            display: block;
+        }
+
+        .office-cities ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .office-cities li {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .overlay-content {
+                grid-template-columns: 1fr;
+                gap: 50px;
+                padding: 100px 30px 40px;
+            }
+            .project-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 30px;
+            }
+            .page-title {
+                font-size: 3rem;
+            }
+            .showcase-content {
+                grid-template-columns: 1fr;
+            }
+            .showcase-image {
+                grid-row: 1; /* Image on top on mobile */
+                min-height: 300px;
+            }
+            .showcase-image img {
+                min-height: 300px;
+            }
+            .showcase-text {
+                padding: 40px 30px 100px; /* Add padding for pager */
+            }
+            .showcase-title {
+                font-size: 2rem;
+                margin-bottom: 0;
+            }
+            .showcase-pager {
+                left: 30px;
+                bottom: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mm-header {
+                padding: 20px;
+            }
+            .header-logo img {
+                height: 30px;
+            }
+            .header-contact { 
+                display: none; 
+            }
+            .main-content {
+                padding: 40px 20px;
+            }
+            .page-title {
+                font-size: 2.5rem;
+            }
+            .filter-section {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header class="mm-header">
+        <div class="header-logo">
+            <a href="index.html">
+                <img src="images/mainlogo.png" alt="AIM Interiors Logo">
+            </a>
+        </div>
+        <div class="header-right">
+            <div class="header-contact">
+                <a href="#">Get in touch</a>
+            </div>
+            <div class="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <div class="overlay-menu">
+        <div class="overlay-content">
+            <div class="overlay-left">
+                <a href="#" class="overlay-image-link">
+                    <img src="https://images.unsplash.com/photo-1554995207-c18c203602cb?w=400&h=500&fit=crop" alt="Featured Project 1">
+                    <span>Project | Modern Villa</span>
+                </a>
+                <a href="#" class="overlay-image-link">
+                    <img src="https://images.unsplash.com/photo-1560185009-dddeb820c7b7?w=400&h=500&fit=crop" alt="Featured Project 2">
+                    <span>Idea | Open-Plan Living</span>
+                </a>
+                <a href="#" class="overlay-image-link">
+                    <img src="https://images.unsplash.com/photo-1616046229478-9901c5536a45?w=400&h=500&fit=crop" alt="Featured Project 3">
+                    <span>Project | Urban Office</span>
+                </a>
+                <a href="#" class="overlay-image-link">
+                    <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=400&h=500&fit=crop" alt="Featured Project 4">
+                    <span>News | Sustainability Award</span>
+                </a>
+            </div>
+            <div class="overlay-right">
+                <div class="nav-group">
+                    <a href="about.html">About</a>
+                    <a href="team.html">Team</a>
+                    <a href="#">Offices</a>
+                    <a href="#">News</a>
+                    <a href="#">Climate</a>
+                    <a href="#">Awards</a>
+                    <a href="#">Careers</a>
+                </div>
+                <div class="nav-group">
+                    <a href="project.html">Projects</a>
+                    <a href="#">Ideas</a>
+                    <a href="#">Services</a>
+                </div>
+                <div class="nav-group">
+                    <h3 class="nav-group-title">GET IN TOUCH</h3>
+                    <a href="#">Search</a>
+                    <a href="#">Contact</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="page-header fade-in">
+            <h1 class="page-title">Projects</h1>
+            <p class="page-subtitle">Workplace design and architecture projects from around the world</p>
+        </div>
+
+        <section class="project-showcase fade-in">
+            <div class="showcase-content">
+                <div class="showcase-text">
+                    <p class="showcase-breadcrumb">&lt;&gt; Projects | Bengaluru</p>
+                    <h2 class="showcase-title">
+                        <a href="#">Expanding an innovative fintech campus &rarr;</a>
+                    </h2>
+                    <div class="showcase-pager">
+                        <button>&lt;</button>
+                        <span>5/5</span>
+                        <button>&gt;</button>
+                    </div>
+                </div>
+                <div class="showcase-image">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" style="width:100%; height:500px; background:#f0f0f0;" alt="Fintech Campus">
+                </div>
+            </div>
+        </section>
+
+        <div class="filter-section fade-in">
+            <div class="filter-group">
+                <label class="filter-label">Type</label>
+                <select class="filter-select">
+                    <option>All</option>
+                    <option>Education</option>
+                    <option>Healthcare</option>
+                    <option>Office</option>
+                    <option>R&D</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label">Topics</label>
+                <select class="filter-select">
+                    <option>All</option>
+                    <option>Interior design</option>
+                    <option>Workplace strategy</option>
+                    <option>Architecture</option>
+                    <option>Health & wellness</option>
+                    <option>Change management</option>
+                    <option>Sustainability</option>
+                    <option>Brand experience</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label">Region</label>
+                <select class="filter-select">
+                    <option>All</option>
+                    <option>India</option>
+                    <option>Europe & Middle East</option>
+                    <option>Americas</option>
+                    <option>Australia</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label">Search</label>
+                <input type="text" class="search-box" placeholder="Search projects...">
+            </div>
+        </div>
+
+        <div class="project-grid">
+            <a href="#" class="project-card fade-in">
+                <div class="project-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80" alt="London Office">
+                </div>
+                <div class="project-info">
+                    <p class="project-category">Projects | London</p>
+                    <h3 class="project-title">Rethinking the office: renew or relocate?</h3>
+                    <p class="project-location">London, UK</p>
+                </div>
+            </a>
+
+            <a href="#" class="project-card fade-in">
+                <div class="project-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&q=80" alt="Singapore Office">
+                </div>
+                <div class="project-info">
+                    <p class="project-category">Projects | Singapore</p>
+                    <h3 class="project-title">Inspiring innovation at Dyson's repurposed global headquarters</h3>
+                    <p class="project-location">Singapore</p>
+                </div>
+            </a>
+
+            <a href="#" class="project-card fade-in" data-type="office" data-topic="interiordesign" data-region="india">
+                <div class="project-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1593941707874-ef25b8b4a92b?w=800&q=80" alt="Mumbai Office">
+                </div>
+                <div class="project-info">
+                    <p class="project-category">Projects | Mumbai</p>
+                    <h3 class="project-title">Sounding a new beat with a creative and cultural destination</h3>
+                    <p class="project-location">Mumbai, India</p>
+                </div>
+            </a>
+
+            <a href="#" class="project-card fade-in">
+                <div class="project-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&q=80" alt="London Sustainable">
+                </div>
+                <div class="project-info">
+                    <p class="project-category">Projects | London</p>
+                    <h3 class="project-title">Bringing people together - sustainably accredited office architecture</h3>
+                    <p class="project-location">London, UK</p>
+                </div>
+            </a>
+
+            <a href="#" class="project-card fade-in">
+                <div class="project-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&q=80" alt="New York Office">
+                </div>
+                <div class="project-info">
+                    <p class="project-category">Projects | New York</p>
+                    <h3 class="project-title">Office repositioning that bridges brand identity and employee wellbeing</h3>
+                    <p class="project-location">New York, USA</p>
+                </div>
+            </a>
+
+            <a href="#" class="project-card fade-in">
+                <div class="project-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80" alt="Seoul Office">
+                </div>
+                <div class="project-info">
+                    <p class="project-category">Projects | Seoul</p>
+                    <h3 class="project-title">Advancing flexibility and collaboration in a reimagined office</h3>
+                    <p class="project-location">Seoul, South Korea</p>
+                </div>
+            </a>
+
+            <a href="#" class="project-card fade-in">
+                <div class="project-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&q=80" alt="Bengaluru Office">
+                </div>
+                <div class="project-info">
+                    <p class="project-category">Projects | Bengaluru</p>
+                    <h3 class="project-title">Creating a modern workspace for tech innovation</h3>
+                    <p class="project-location">Bengaluru, India</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="load-more-section">
+            <button class="load-more-btn">Load more</button>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Get in touch</h3>
+                <a href="#" class="footer-btn">Contact</a>
+            </div>
+            <div class="footer-column">
+                <h3>Latest news</h3>
+                <a href="#" class="footer-btn">Subscribe</a>
+            </div>
+            <div class="footer-column offices">
+                <h3>Offices</h3>
+                <div class="office-region" onclick="toggleOffices('india')">
+                    <span>India</span>
+                    <span>v</span>
+                </div>
+                <div class="office-cities" id="india-offices">
+                    <ul>
+                        <li>Bengaluru</li>
+                        <li>Delhi</li>
+                        <li>Hyderabad</li>
+                        <li>Mumbai</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const overlayMenu = document.querySelector('.overlay-menu');
+            const header = document.querySelector('.mm-header');
+
+            // Hamburger menu logic
+            if (hamburgerMenu && overlayMenu && header) {
+                hamburgerMenu.addEventListener('click', () => {
+                    hamburgerMenu.classList.toggle('active');
+                    overlayMenu.classList.toggle('active');
+                    header.classList.toggle('menu-open');
+                });
+            }
+
+            // Overlay link logic
+            const navLinks = document.querySelectorAll('.overlay-right a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const destination = this.href;
+                    
+                    // Check if the link points to an existing page
+                    const existingPages = ['about.html', 'team.html', 'index.html', 'project.html'];
+                    const isExistingPage = existingPages.some(page => destination.includes(page));
+                    
+                    if (isExistingPage) {
+                        // For existing pages, allow direct navigation
+                        return; // Let the default link behavior work
+                    } else {
+                        // For non-existing pages, prevent navigation and show animation
+                        e.preventDefault();
+                        
+                        // Deactivate menu
+                        hamburgerMenu.classList.remove('active');
+                        overlayMenu.classList.remove('active');
+                        header.classList.remove('menu-open');
+                        
+                        // Wait for animation to finish, then navigate
+                        setTimeout(() => {
+                            window.location.href = destination;
+                        }, 600);
+                    }
+                });
+            });
+
+            // Scroll animations
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+
+            // Filter functionality
+            const filterSelects = document.querySelectorAll('.filter-select');
+            const searchBox = document.querySelector('.search-box');
+            const projectCards = document.querySelectorAll('.project-card');
+
+            function filterProjects() {
+                const typeFilter = document.querySelector('.filter-select:nth-of-type(1)').value;
+                const topicFilter = document.querySelector('.filter-select:nth-of-type(2)').value;
+                const regionFilter = document.querySelector('.filter-select:nth-of-type(3)').value;
+                const searchTerm = searchBox.value.toLowerCase();
+
+                projectCards.forEach(card => {
+                    const category = card.querySelector('.project-category').textContent.toLowerCase();
+                    const title = card.querySelector('.project-title').textContent.toLowerCase();
+                    const location = card.querySelector('.project-location').textContent.toLowerCase();
+                    
+                    const matchesType = typeFilter === 'All' || category.includes(typeFilter.toLowerCase());
+                    const matchesTopic = topicFilter === 'All' || title.includes(topicFilter.toLowerCase());
+                    const matchesRegion = regionFilter === 'All' || location.includes(regionFilter.toLowerCase());
+                    const matchesSearch = searchTerm === '' || 
+                        category.includes(searchTerm) || 
+                        title.includes(searchTerm) || 
+                        location.includes(searchTerm);
+
+                    if (matchesType && matchesTopic && matchesRegion && matchesSearch) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+
+            filterSelects.forEach(select => {
+                select.addEventListener('change', filterProjects);
+            });
+
+            searchBox.addEventListener('input', filterProjects);
+
+            // Load more functionality
+            const loadMoreBtn = document.querySelector('.load-more-btn');
+            let currentPage = 1;
+            const projectsPerPage = 8;
+
+            if (loadMoreBtn) {
+                loadMoreBtn.addEventListener('click', function() {
+                    // Simulate loading more projects
+                    currentPage++;
+                    this.textContent = 'Loading...';
+                    
+                    setTimeout(() => {
+                        this.textContent = 'Load more';
+                        // In a real implementation, you would load more projects here
+                    }, 1000);
+                });
+            }
+        });
+
+        function toggleOffices(region) {
+            const officeCities = document.getElementById(region + '-offices');
+            const allOfficeCities = document.querySelectorAll('.office-cities');
+            
+            // Close all other office sections
+            allOfficeCities.forEach(cities => {
+                if (cities !== officeCities) {
+                    cities.classList.remove('active');
+                }
+            });
+            
+            // Toggle the clicked section
+            officeCities.classList.toggle('active');
+        }
+    </script>
+</body>
+</html> 

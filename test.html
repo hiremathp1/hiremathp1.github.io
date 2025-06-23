@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .test-video {
+            width: 400px;
+            height: 300px;
+            border: 2px solid #333;
+            margin: 20px 0;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <h1>Video Test Page</h1>
+    
+    <div class="status info">Testing video playback...</div>
+    
+    <h3>Test Video 1 (W3Schools Rain):</h3>
+    <video class="test-video" controls>
+        <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <h3>Test Video 2 (W3Schools Snow):</h3>
+    <video class="test-video" controls>
+        <source src="https://www.w3schools.com/howto/snow.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <h3>Test Video 3 (Simple MP4):</h3>
+    <video class="test-video" controls>
+        <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <div id="results"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const videos = document.querySelectorAll('video');
+            const results = document.getElementById('results');
+            
+            videos.forEach((video, index) => {
+                console.log(`Testing video ${index + 1}:`, video.src);
+                
+                video.addEventListener('loadstart', () => {
+                    console.log(`Video ${index + 1}: Load started`);
+                });
+                
+                video.addEventListener('canplay', () => {
+                    console.log(`Video ${index + 1}: Can play`);
+                    results.innerHTML += `<div class="status success">Video ${index + 1}: ✅ Working</div>`;
+                });
+                
+                video.addEventListener('error', (e) => {
+                    console.log(`Video ${index + 1}: Error`, e);
+                    results.innerHTML += `<div class="status error">Video ${index + 1}: ❌ Failed to load</div>`;
+                });
+                
+                video.addEventListener('loadeddata', () => {
+                    console.log(`Video ${index + 1}: Data loaded`);
+                });
+            });
+            
+            // Test autoplay
+            setTimeout(() => {
+                const testAutoplay = document.createElement('video');
+                testAutoplay.muted = true;
+                testAutoplay.src = 'https://www.w3schools.com/howto/rain.mp4';
+                
+                testAutoplay.play().then(() => {
+                    console.log('Autoplay works!');
+                    results.innerHTML += `<div class="status success">✅ Autoplay: Working</div>`;
+                }).catch((error) => {
+                    console.log('Autoplay failed:', error);
+                    results.innerHTML += `<div class="status error">❌ Autoplay: Blocked by browser</div>`;
+                });
+            }, 2000);
+        });
+    </script>
+</body>
+</html> 

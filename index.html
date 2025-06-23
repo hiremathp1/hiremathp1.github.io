@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIM Interiors - Professional Landing Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            color: #000;
+            overflow-x: hidden;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 1s ease-out 0.5s, visibility 1s ease-out 0.5s;
+        }
+
+        .loading-screen.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* New Visual Loading Animation */
+        .loading-visual-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            width: 250px;
+            height: 250px;
+            position: relative;
+        }
+
+        .stage {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+
+        .stage.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .stage svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            stroke-width: 1.5;
+        }
+
+        .stage span {
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        .final-logo-reveal {
+            position: absolute;
+            width: 100%; height: 100%;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .final-logo-reveal.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .final-logo-reveal img {
+            max-width: 80%;
+            /* filter: brightness(0) invert(1); -- Removing this to show original logo */
+        }
+
+        /* Main Content - Animate In */
+        .main-content {
+            opacity: 0;
+            animation: contentFadeIn 0.5s ease-out 6s forwards;
+        }
+
+        @keyframes contentFadeIn {
+            to { opacity: 1; }
+        }
+
+        /* M Moser Inspired Header */
+        .mm-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1002;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .mm-header.menu-open {
+            background-color: transparent;
+            backdrop-filter: none;
+            border-bottom: 1px solid transparent;
+        }
+
+        .header-logo img {
+            height: 40px;
+            display: block;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .hamburger-menu {
+            cursor: pointer;
+            width: 32px;
+            height: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1003;
+        }
+
+        .hamburger-menu span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: #000;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out, background-color 0.3s ease-in-out;
+        }
+
+        .hamburger-menu.active span {
+            background: #fff;
+        }
+        .hamburger-menu.active span:nth-child(1) {
+            transform: translateY(11px) rotate(45deg);
+        }
+        .hamburger-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger-menu.active span:nth-child(3) {
+            transform: translateY(-11px) rotate(-45deg);
+        }
+        
+        .header-contact a {
+            font-size: 16px;
+            font-weight: 500;
+            color: #000;
+            text-decoration: none;
+            padding-bottom: 2px;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s, color 0.3s;
+        }
+
+        .mm-header.menu-open .header-contact a {
+            color: #fff;
+        }
+
+        .header-contact a:hover {
+            border-color: #000;
+        }
+
+        /* Full Screen Overlay Menu - M Moser Style */
+        .overlay-menu {
+            position: fixed;
+            top: 0;
+            right: 0; /* Animate from the right */
+            width: 100%;
+            height: 100%;
+            background: #000;
+            color: #fff;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translateX(100%);
+            transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+            visibility: hidden;
+        }
+
+        .overlay-menu.active {
+            transform: translateX(0);
+            visibility: visible;
+        }
+
+        .overlay-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            max-width: 1400px;
+            width: 100%;
+            padding: 80px 40px;
+            align-items: center; /* Vertically center the content */
+        }
+
+        /* Left side of overlay (images) */
+        .overlay-left {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .overlay-image-link {
+            text-decoration: none;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .overlay-image-link img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .overlay-image-link:hover img {
+            transform: scale(1.05);
+        }
+
+        .overlay-image-link span {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.4);
+        }
+
+        /* Right side of overlay (nav links) */
+        .overlay-right {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            justify-content: center;
+        }
+
+        .nav-group {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .nav-group-title {
+            color: #999;
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .overlay-right a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 2.8rem;
+            font-weight: 400;
+            line-height: 1.2;
+            transition: color 0.3s;
+        }
+
+        .overlay-right a:hover {
+            color: #aaa;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 80px 40px;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .hero-video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+        .hero-video-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 300;
+            line-height: 1.2;
+            max-width: 1000px;
+        }
+
+        .scroll-arrow {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-size: 4rem;
+            cursor: pointer;
+            z-index: 2;
+            animation: bounce 2s infinite;
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .scroll-arrow:hover {
+            color: #ccc;
+            transform: translateX(-50%) scale(1.2);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-15px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-8px);
+            }
+        }
+        
+        /* Adapt Section */
+        .adapt-section {
+            padding: 100px 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .adapt-content {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .adapt-content h2 {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+        }
+        
+        .adapt-content p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #333;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 100px 40px;
+            background: #f8f8f8;
+            display: flex;
+            justify-content: center;
+        }
+
+        .about-content {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        .about-text .subtitle {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .overlay-content {
+                grid-template-columns: 1fr;
+                gap: 50px;
+                padding: 100px 30px 40px;
+                overflow-y: auto;
+            }
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            .overlay-nav-group ul a {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stage svg { width: 60px; height: 60px; }
+            .stage span { font-size: 1.2rem; }
+            .mm-header {
+                padding: 20px;
+            }
+            .header-logo img {
+                height: 30px;
+            }
+            .header-contact { display: none; }
+            .hero-content h1 { font-size: 2.5rem; }
+            .adapt-section { padding: 80px 20px; }
+            .adapt-content h2 { font-size: 2.2rem; }
+            .scroll-arrow { font-size: 3rem; }
+        }
+
+        #video-log-container {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            z-index: 1000;
+        }
+
+        #video-log-container p {
+            margin: 2px 0;
+            font-size: 12px;
+        }
+        
+        /* New Content Sections */
+        .content-section {
+            padding: 120px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .content-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 300;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-size: 1.25rem;
+            font-weight: 300;
+            max-width: 550px;
+            margin-bottom: 2.5rem;
+            color: #555;
+        }
+
+        .section-link {
+            display: inline-block;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #000;
+            text-decoration: none;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #000;
+            transition: color 0.3s, border-color 0.3s;
+        }
+
+        .section-link:hover {
+            color: #777;
+            border-color: #777;
+        }
+
+        /* Project Grid */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 80px;
+        }
+
+        .project-card {
+            text-decoration: none;
+            color: #000;
+            display: block;
+            overflow: hidden;
+        }
+
+        .project-card.grid-item-large {
+            grid-column: span 2;
+        }
+
+        .project-image-wrapper {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .project-card img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .project-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .project-info {
+            padding: 20px 0;
+        }
+
+        .project-info .category {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .project-info .title {
+            font-size: 1.5rem;
+            font-weight: 400;
+        }
+
+        /* Full-Bleed BG Section */
+        .full-bleed-section {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            color: #fff;
+            padding: 0 40px;
+        }
+
+        .full-bleed-section .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+        }
+
+        .full-bleed-section .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            z-index: -1;
+        }
+
+        /* Footer */
+        .main-footer {
+            background-color: #f0f0f0;
+            padding: 100px 40px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+        
+        .footer-btn {
+            display: inline-block;
+            background: transparent;
+            color: #000;
+            border: 2px solid #000;
+            padding: 10px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            clip-path: polygon(0 15%, 15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        .footer-column.offices .office-region {
+             border-bottom: 1px solid #000;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-visual-container">
+            <div class="stage" id="stage-architecture">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+                <span>Architecture</span>
+            </div>
+            <div class="stage" id="stage-interior">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 9V5a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v4"></path><path d="M16 11v10H8V11"></path><path d="M12 3v8"></path></svg>
+                <span>Interior Design</span>
+            </div>
+            <div class="stage" id="stage-management">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                <span>Project Management</span>
+            </div>
+            <div class="final-logo-reveal" id="finalLogoReveal">
+                <img src="images/mainlogo.png" alt="AIM Interiors Logo">
+            </div>
+        </div>
+    </div>
+
+    <header class="mm-header">
+        <div class="header-logo">
+            <a href="index.html">
+                <img src="images/mainlogo.png" alt="AIM Interiors Logo">
+            </a>
+        </div>
+        <div class="header-right">
+            <div class="header-contact">
+                <a href="#">Get in touch</a>
+            </div>
+            <div class="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <div class="overlay-menu">
+        <div class="overlay-content">
+            <div class="overlay-left">
+                <a href="#" class="overlay-image-link">
+                    <img src="https://images.unsplash.com/photo-1554995207-c18c203602cb?w=400&h=500&fit=crop" alt="Featured Project 1">
+                    <span>Project | Modern Villa</span>
+                </a>
+                <a href="#" class="overlay-image-link">
+                    <img src="https://images.unsplash.com/photo-1560185009-dddeb820c7b7?w=400&h=500&fit=crop" alt="Featured Project 2">
+                    <span>Idea | Open-Plan Living</span>
+                </a>
+                <a href="#" class="overlay-image-link">
+                    <img src="https://images.unsplash.com/photo-1616046229478-9901c5536a45?w=400&h=500&fit=crop" alt="Featured Project 3">
+                    <span>Project | Urban Office</span>
+                </a>
+                <a href="#" class="overlay-image-link">
+                    <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=400&h=500&fit=crop" alt="Featured Project 4">
+                    <span>News | Sustainability Award</span>
+                </a>
+            </div>
+            <div class="overlay-right">
+                <div class="nav-group">
+                    <a href="about.html">About</a>
+                    <a href="team.html">Team</a>
+                    <a href="#">Offices</a>
+                    <a href="#">News</a>
+                    <a href="#">Climate</a>
+                    <a href="#">Awards</a>
+                    <a href="#">Careers</a>
+                </div>
+                <div class="nav-group">
+                    <a href="project.html">Projects</a>
+                    <a href="#">Ideas</a>
+                    <a href="#">Services</a>
+                </div>
+                <div class="nav-group">
+                    <h3 class="nav-group-title">GET IN TOUCH</h3>
+                    <a href="#">Search</a>
+                    <a href="#">Contact</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <main>
+            <section class="hero">
+                <div class="hero-video-bg">
+                    <video autoplay muted loop playsinline>
+                        <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h1>AIM, the name is synonymous with CORPORATE & RETAIL INTERIORS.</h1>
+                </div>
+                <div class="scroll-arrow" onclick="scrollToAdaptSection()">↓</div>
+            </section>
+            <section class="adapt-section" id="adaptSection">
+                <div class="adapt-content">
+                    <h2>Adapt to tomorrow</h2>
+                    <p>Uniting architecture, engineering and construction to deliver spaces built for success — beautifully, sustainably and at scale.</p>
+                    <a href="#" class="btn">Projects</a>
+                </div>
+            </section>
+
+            <!-- Adapt to Tomorrow Section -->
+            <section class="content-section" id="adapt">
+                <h2 class="section-title">Adapt to tomorrow</h2>
+                <p class="section-subtitle">Uniting architecture, engineering and construction to deliver spaces built for success — beautifully, sustainably and at scale.</p>
+                <a href="#" class="section-link">Projects</a>
+
+                <div class="project-grid">
+                    <a href="#" class="project-card grid-item-large">
+                        <div class="project-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80" alt="Modern Building">
+                        </div>
+                        <div class="project-info">
+                            <p class="category">Projects | Miro, Berlin</p>
+                            <h3 class="title">Driving office attendance with measurable impact</h3>
+                        </div>
+                    </a>
+                    <a href="#" class="project-card">
+                        <div class="project-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80" alt="Interior Stairway">
+                        </div>
+                         <div class="project-info">
+                            <p class="category">Projects | HSBC, New York</p>
+                            <h3 class="title">Raising the bar with the most ambitious workplace in New York City</h3>
+                        </div>
+                    </a>
+                     <a href="#" class="project-card">
+                        <div class="project-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80" alt="Living Room">
+                        </div>
+                         <div class="project-info">
+                            <p class="category">Ideas | Sensory Design</p>
+                            <h3 class="title">Sensory design for offices – it's child's play.</h3>
+                        </div>
+                    </a>
+                </div>
+            </section>
+            
+            <!-- Shaped by Global Experience Section -->
+            <section class="full-bleed-section content-section" id="experience">
+                <div class="background-image" style="background-image: url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2000');"></div>
+                <div class="overlay"></div>
+                <div class="content-wrapper">
+                    <h2 class="section-title">Shaped by global experience</h2>
+                    <p class="section-subtitle">We solve business critical challenges from concept to completion, while also mitigating commercial risk.</p>
+                    <a href="#" class="section-link" style="color: #fff; border-color: #fff;">Ideas</a>
+                </div>
+            </section>
+
+            <section class="content-section" id="ideas-1">
+                 <div class="project-grid">
+                    <a href="#" class="project-card">
+                        <div class="project-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80" alt="Podcast Logo">
+                        </div>
+                         <div class="project-info">
+                            <p class="category">Ideas | Place of Work Podcast</p>
+                            <h3 class="title">Exploring the future of work and the role of the physical office.</h3>
+                        </div>
+                    </a>
+                     <a href="#" class="project-card">
+                        <div class="project-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" alt="Woman in architecture">
+                        </div>
+                         <div class="project-info">
+                            <p class="category">Ideas | Women in Architecture</p>
+                            <h3 class="title">Moira Moser gives advice to women in architecture</h3>
+                        </div>
+                    </a>
+                </div>
+            </section>
+            
+            <section class="full-bleed-section content-section" id="ideas-2">
+                 <div class="background-image" style="background-image: url('https://images.unsplash.com/photo-1549923746-c502d488b3ea?w=2000&q=80');"></div>
+                <div class="overlay"></div>
+                <div class="content-wrapper">
+                    <h2 class="section-title">What's shaping the world of work?</h2>
+                    <p class="section-subtitle">Our reflections on the evolving landscape of workplace design and strategy.</p>
+                    <a href="#" class="section-link" style="color: #fff; border-color: #fff;">Read More</a>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Get in touch</h3>
+                <a href="#" class="footer-btn">Contact</a>
+            </div>
+            <div class="footer-column">
+                <h3>Latest news</h3>
+                <a href="#" class="footer-btn">Subscribe</a>
+            </div>
+            <div class="footer-column offices">
+                 <h3>Offices</h3>
+                 <div class="office-region">
+                    <span>India</span>
+                    <span>v</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const loadingScreen = document.querySelector('.loading-screen');
+        const mainContent = document.querySelector('.main-content');
+        const hamburgerMenu = document.querySelector('.hamburger-menu');
+        const overlayMenu = document.querySelector('.overlay-menu');
+        const header = document.querySelector('.mm-header');
+
+        // --- Loading Animation Logic ---
+        const stages = document.querySelectorAll('.stage');
+        const finalLogo = document.querySelector('.final-logo-reveal');
+        const stageDuration = 1800;
+        let currentStage = 0;
+
+        const animationInterval = setInterval(() => {
+            if (stages[currentStage]) {
+                stages[currentStage].classList.remove('active');
+            }
+            currentStage++;
+            if (stages[currentStage]) {
+                stages[currentStage].classList.add('active');
+            } else {
+                clearInterval(animationInterval);
+                if(finalLogo) finalLogo.classList.add('active');
+            }
+        }, stageDuration);
+
+        if (stages[0]) {
+            stages[0].classList.add('active');
+        }
+        
+        const totalAnimationTime = (stages.length + 1) * stageDuration;
+
+        setTimeout(() => {
+            if (loadingScreen) {
+                loadingScreen.classList.add('fade-out');
+            }
+            // Animate in header and main content after loading screen
+            if (header) header.style.opacity = '1';
+            if (mainContent) mainContent.style.opacity = '1';
+        }, totalAnimationTime);
+
+
+        // --- Hamburger menu logic ---
+        if (hamburgerMenu && overlayMenu && header) {
+            hamburgerMenu.addEventListener('click', () => {
+                hamburgerMenu.classList.toggle('active');
+                overlayMenu.classList.toggle('active');
+                header.classList.toggle('menu-open');
+            });
+        }
+
+        // --- Overlay link logic ---
+        const navLinks = document.querySelectorAll('.overlay-right a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const destination = this.href;
+                
+                // Check if the link points to an existing page
+                const existingPages = ['about.html', 'team.html', 'index.html', 'project.html'];
+                const isExistingPage = existingPages.some(page => destination.includes(page));
+                
+                if (isExistingPage) {
+                    // For existing pages, allow direct navigation
+                    return; // Let the default link behavior work
+                } else {
+                    // For non-existing pages, prevent navigation and show animation
+                    e.preventDefault();
+                    
+                    // Deactivate menu
+                    hamburgerMenu.classList.remove('active');
+                    overlayMenu.classList.remove('active');
+                    header.classList.remove('menu-open');
+                    
+                    // Wait for animation to finish, then navigate
+                    setTimeout(() => {
+                        window.location.href = destination;
+                    }, 600); // Should match the transition duration of the overlay
+                }
+            });
+        });
+
+        // Scroll animations for new content
+        const sections = document.querySelectorAll('.content-section');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    });
+
+    function scrollToAdaptSection() {
+        document.getElementById('adaptSection').scrollIntoView({
+            behavior: 'smooth'
+        });
+    }
+    </script>
+</body>
+</html> 

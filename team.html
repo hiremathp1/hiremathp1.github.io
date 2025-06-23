@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team - AIM Interiors</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+            font-weight: 300;
+        }
+
+        /* Header */
+        .header {
+            background: #fff;
+            padding: 20px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid #eee;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 400;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: #666;
+        }
+
+        .contact-btn {
+            background: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .contact-btn:hover {
+            background: #555;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 100px;
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .page-title {
+            font-size: 48px;
+            font-weight: 400;
+            margin-bottom: 40px;
+            color: #000;
+        }
+
+        .page-subtitle {
+            font-size: 22px;
+            font-weight: 300;
+            margin-bottom: 60px;
+            color: #555;
+            max-width: 600px;
+        }
+
+        /* Featured Founder Section */
+        .featured-founder {
+            margin-bottom: 80px;
+        }
+
+        .founder-image {
+            width: 100%;
+            height: auto;
+            max-width: 900px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .founder-caption {
+            max-width: 900px;
+            margin: 15px auto 0;
+            font-size: 14px;
+            color: #555;
+            font-weight: 400;
+        }
+        
+        .founder-caption span {
+            margin-right: 10px;
+        }
+
+        /* Team Grid */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+
+        .team-member {
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+        }
+
+        .member-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            background-color: #f0f0f0;
+        }
+
+        .member-name {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #000;
+        }
+
+        .member-title {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .member-region {
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            margin-bottom: 60px;
+        }
+
+        .filter-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .filter-btn {
+            padding: 8px 18px;
+            border: 1px solid #ddd;
+            background: #fff;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: #000;
+            color: #fff;
+            border-color: #000;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 300px;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Load More Button */
+        .load-more {
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .load-more-btn {
+            background: #fff;
+            color: #333;
+            padding: 12px 30px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 4px;
+            transition: all 0.3s;
+            clip-path: polygon(0 15%, 15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
+        }
+
+        .load-more-btn:hover {
+            background: #f8f8f8;
+            border-color: #aaa;
+        }
+
+        /* Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Around the World Section */
+        .around-the-world {
+            background-color: #4CAF50; /* A green color similar to the image */
+            color: #000;
+            text-align: center;
+            padding: 80px 20px;
+            margin-top: 80px;
+        }
+
+        .around-the-world h2 {
+            font-size: 36px;
+            font-weight: 500;
+            margin-bottom: 30px;
+        }
+
+        .locations-btn {
+            background: transparent;
+            color: #000;
+            border: 2px solid #000;
+            padding: 12px 30px;
+            font-size: 16px;
+            cursor: pointer;
+            clip-path: polygon(0 15%, 15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .locations-btn:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        /* Footer */
+        .footer {
+            background: #f0f0f0;
+            padding: 80px 20px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .footer-left {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .footer-right {
+            flex: 2;
+            min-width: 400px;
+        }
+
+        .footer-left h3 {
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 20px;
+            display: inline-block;
+            margin-right: 40px;
+        }
+
+        .footer-btn {
+            background: transparent;
+            color: #000;
+            border: 2px solid #000;
+            padding: 10px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            clip-path: polygon(0 15%, 15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
+            margin-right: 15px;
+            margin-bottom: 30px;
+        }
+
+        .social-icons {
+            margin-bottom: 30px;
+        }
+
+        .social-icons a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #333;
+            font-size: 20px;
+        }
+
+        .copyright {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .footer-right h3 {
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+
+        .offices-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .office-region {
+            border-bottom: 1px solid #000;
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .footer-legal {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .page-title {
+                font-size: 36px;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-buttons {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .footer-container {
+                flex-direction: column;
+            }
+             .offices-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">AIM Interiors</a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="team.html">Team</a></li>
+                    <li><a href="project.html">Projects</a></li>
+                    <li><a href="offices.html">Offices</a></li>
+                    <li><a href="news.html">News</a></li>
+                </ul>
+            </nav>
+            <a href="contact.html" class="contact-btn">Contact</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <h1 class="page-title">Team</h1>
+        <p class="page-subtitle fade-in">We bring diverse perspectives together to arrive at original answers</p>
+
+        <!-- Featured Founder -->
+        <div class="featured-founder fade-in">
+            <img src="https://picsum.photos/seed/founder/1200/800" alt="Moira Moser" class="founder-image">
+            <p class="founder-caption"><span>&lt;&gt;</span>Madhusudhan Nagar - Founder & Chairman</p>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="filter-section fade-in" style="margin-top: 80px;">
+            <h3 class="filter-title">Region</h3>
+            <div class="filter-buttons">
+                <button class="filter-btn active">All</button>
+                <button class="filter-btn">Mainland China / Hong Kong / Taiwan</button>
+                <button class="filter-btn">South East Asia</button>
+                <button class="filter-btn">India</button>
+                <button class="filter-btn">Europe & Middle East</button>
+                <button class="filter-btn">Americas</button>
+                <button class="filter-btn">Australia</button>
+            </div>
+            <input type="text" class="search-box" placeholder="Search">
+        </div>
+
+        <!-- Team Grid -->
+        <div class="team-grid">
+            <div class="team-member fade-in">
+                <img src="https://picsum.photos/seed/person1/150/150" alt="Sarah Johnson" class="member-image">
+                <h3 class="member-name">Sarah Johnson</h3>
+                <p class="member-title">Senior Design Director</p>
+                <p class="member-region">Americas</p>
+            </div>
+
+            <div class="team-member fade-in">
+                <img src="https://picsum.photos/seed/person2/150/150" alt="Michael Chen" class="member-image">
+                <h3 class="member-name">Michael Chen</h3>
+                <p class="member-title">Principal Architect</p>
+                <p class="member-region">Asia Pacific</p>
+            </div>
+
+            <div class="team-member fade-in">
+                <img src="https://picsum.photos/seed/person3/150/150" alt="Emma Rodriguez" class="member-image">
+                <h3 class="member-name">Emma Rodriguez</h3>
+                <p class="member-title">Creative Director</p>
+                <p class="member-region">Europe</p>
+            </div>
+
+            <div class="team-member fade-in">
+                <img src="https://picsum.photos/seed/person4/150/150" alt="David Kim" class="member-image">
+                <h3 class="member-name">David Kim</h3>
+                <p class="member-title">Studio Manager</p>
+                <p class="member-region">Americas</p>
+            </div>
+
+            <div class="team-member fade-in">
+                <img src="https://picsum.photos/seed/person5/150/150" alt="Lisa Wang" class="member-image">
+                <h3 class="member-name">Lisa Wang</h3>
+                <p class="member-title">Senior Designer</p>
+                <p class="member-region">Asia Pacific</p>
+            </div>
+
+            <div class="team-member fade-in">
+                <img src="https://picsum.photos/seed/person6/150/150" alt="James Wilson" class="member-image">
+                <h3 class="member-name">James Wilson</h3>
+                <p class="member-title">Project Director</p>
+                <p class="member-region">Europe</p>
+            </div>
+
+            <div class="team-member fade-in">
+                <img src="https://picsum.photos/seed/person7/150/150" alt="Anna Patel" class="member-image">
+                <h3 class="member-name">Anna Patel</h3>
+                <p class="member-title">Interior Designer</p>
+                <p class="member-region">India</p>
+            </div>
+
+            <div class="team-member fade-in">
+                <img src="https://picsum.photos/seed/person8/150/150" alt="Robert Taylor" class="member-image">
+                <h3 class="member-name">Robert Taylor</h3>
+                <p class="member-title">Technical Director</p>
+                <p class="member-region">Americas</p>
+            </div>
+
+            <div class="team-member fade-in">
+                <img src="https://picsum.photos/seed/person9/150/150" alt="Yuki Tanaka" class="member-image">
+                <h3 class="member-name">Yuki Tanaka</h3>
+                <p class="member-title">Design Associate</p>
+                <p class="member-region">Asia Pacific</p>
+            </div>
+        </div>
+
+        <!-- Load More Button -->
+        <div class="load-more fade-in">
+            <button class="load-more-btn">Load more</button>
+        </div>
+    </main>
+
+    <!-- Around the World -->
+    <section class="around-the-world">
+        <h2>Around the world</h2>
+        <a href="#" class="locations-btn">Locations</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <h3>Get in touch</h3>
+                <h3>Latest news</h3>
+                <div>
+                    <button class="footer-btn">Contact</button>
+                    <button class="footer-btn">Subscribe</button>
+                </div>
+                <div class="social-icons">
+                    <!-- Using text placeholders for icons -->
+                    <a href="#">ln</a>
+                    <a href="#">in</a>
+                    <a href="#">we</a>
+                    <a href="#">P</a>
+                    <a href="#">f</a>
+                    <a href="#">yt</a>
+                </div>
+                <div class="copyright">
+                    © M Moser Associates 2025
+                </div>
+            </div>
+            <div class="footer-right">
+                <h3>Offices</h3>
+                <div class="offices-grid">
+                    <div class="office-region">
+                        <span>Mainland China Hong Kong / Taiwan</span>
+                        <span>v</span>
+                    </div>
+                    <div class="office-region">
+                        <span>Europe & Middle East</span>
+                        <span>v</span>
+                    </div>
+                    <div class="office-region">
+                        <span>South East Asia</span>
+                        <span>v</span>
+                    </div>
+                    <div class="office-region">
+                        <span>Americas</span>
+                        <span>v</span>
+                    </div>
+                    <div class="office-region">
+                        <span>India</span>
+                        <span>v</span>
+                    </div>
+                    <div class="office-region">
+                        <span>Australia</span>
+                        <span>v</span>
+                    </div>
+                </div>
+                <div class="footer-legal">
+                    Terms of use | Privacy Policy | Modern Slavery Act
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const teamMembers = document.querySelectorAll('.team-member');
+        const searchBox = document.querySelector('.search-box');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                const filter = button.textContent.toLowerCase();
+                
+                teamMembers.forEach(member => {
+                    const region = member.querySelector('.member-region').textContent.toLowerCase();
+                    
+                    if (filter === 'all' || region.includes(filter)) {
+                        member.style.display = 'block';
+                    } else {
+                        member.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Search functionality
+        searchBox.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            teamMembers.forEach(member => {
+                const name = member.querySelector('.member-name').textContent.toLowerCase();
+                const title = member.querySelector('.member-title').textContent.toLowerCase();
+                
+                if (name.includes(searchTerm) || title.includes(searchTerm)) {
+                    member.style.display = 'block';
+                } else {
+                    member.style.display = 'none';
+                }
+            });
+        });
+
+        // Load more functionality
+        const loadMoreBtn = document.querySelector('.load-more-btn');
+        loadMoreBtn.addEventListener('click', () => {
+            // Add more team members here
+            const teamGrid = document.querySelector('.team-grid');
+            
+            const newMembers = [
+                { name: 'Maria Garcia', title: 'Senior Designer', region: 'Europe' },
+                { name: 'Alex Thompson', title: 'Project Manager', region: 'Americas' },
+                { name: 'Hiroshi Yamamoto', title: 'Design Director', region: 'Asia Pacific' },
+                { name: 'Priya Sharma', title: 'Interior Architect', region: 'India' }
+            ];
+            
+            newMembers.forEach(member => {
+                const memberDiv = document.createElement('div');
+                memberDiv.className = 'team-member';
+                memberDiv.innerHTML = `
+                    <div class="member-image">👤</div>
+                    <h3 class="member-name">${member.name}</h3>
+                    <p class="member-title">${member.title}</p>
+                    <p class="member-region">${member.region}</p>
+                `;
+                teamGrid.appendChild(memberDiv);
+            });
+            
+            loadMoreBtn.style.display = 'none';
+        });
+
+        // Animation script
+        const animatedElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        animatedElements.forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html> 

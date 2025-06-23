@@ -1,0 +1,410 @@
+/* css/about.css */
+
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    background-color: #fff;
+    color: #333;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.about-main {
+    width: 100%;
+}
+
+/* Hero Section */
+.about-hero {
+    position: relative;
+    width: 100%;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+}
+
+.hero-image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+}
+
+.hero-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+}
+
+.hero-text-content {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+}
+
+.hero-text-content h1 {
+    font-size: 3.5rem;
+    font-weight: 300;
+    margin: 0;
+}
+
+.hero-text-content .subtitle {
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin-top: 1rem;
+}
+
+/* General Content Section Styling */
+.content-section {
+    padding: 6rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.bg-light-grey {
+    background-color: #f8f8f8;
+}
+.text-center {
+    text-align: center;
+}
+.section-title {
+    font-size: 2.8rem;
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+/* Grid systems */
+.two-column-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+}
+.four-column-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+.align-center {
+    align-items: center;
+}
+
+/* Text & Image Blocks */
+.text-block h3 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+}
+.text-block p {
+    color: #666;
+    margin-bottom: 1rem;
+}
+.image-block img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Quote */
+.quote {
+    margin-top: 2rem;
+    border-left: 3px solid #ddd;
+    padding-left: 1.5rem;
+}
+.quote p {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: #555;
+    margin: 0;
+}
+.quote span {
+    display: block;
+    margin-top: 1rem;
+    font-weight: 500;
+    color: #000;
+}
+
+/* Innovation Section */
+.innovation-card {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    transition: transform 0.3s ease;
+}
+.innovation-card:hover {
+    transform: translateY(-5px);
+}
+.innovation-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    margin-bottom: 1rem;
+}
+.innovation-card .card-content span {
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.innovation-card .card-content h4 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0.5rem 0 0 0;
+    line-height: 1.4;
+}
+
+/* Living Labs Section */
+.lab-card {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    color: #fff;
+    text-decoration: none;
+}
+.lab-card img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+.lab-card:hover img {
+    transform: scale(1.05);
+}
+.lab-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+}
+.lab-info {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    z-index: 2;
+}
+.lab-info h3 {
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin: 0 0 0.5rem 0;
+}
+.lab-info p {
+    margin: 0;
+    max-width: 80%;
+}
+
+/* CTA Section */
+.cta-button {
+    display: inline-block;
+    margin: 0 1rem;
+    padding: 1rem 2rem;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s;
+    border: 1px solid #000;
+}
+.cta-button:hover {
+    background-color: #333;
+}
+
+/* Team Stats Section */
+.team-stats-section h3 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+}
+.team-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.team-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #eee;
+    font-size: 1rem;
+}
+.team-list li span:first-child {
+    color: #555;
+}
+.team-list li span:last-child {
+    font-weight: 500;
+}
+.supplementary-note {
+    margin-top: 3rem;
+    font-size: 0.9rem;
+    color: #888;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Org Chart Section */
+.org-chart-section {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+}
+
+.org-chart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Prepare for GSAP animations */
+    visibility: hidden;
+}
+
+.level-1-wrapper {
+    position: relative;
+}
+
+.chart-node {
+    display: inline-block;
+    padding: 1rem 1.5rem;
+    margin: 0.5rem;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-weight: 500;
+    min-width: 160px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.chart-node.director {
+    background-color: #000;
+    color: #fff;
+    border-color: #000;
+    padding: 1.2rem 2rem;
+    font-size: 1.1rem;
+}
+
+.chart-node.department-head {
+    background-color: #444;
+    color: #fff;
+    border-color: #444;
+}
+
+.level-2-wrapper {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin-top: 4rem;
+}
+
+.chart-node-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 1.5rem;
+    position: relative;
+}
+
+.sub-nodes {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+}
+
+.sub-nodes li {
+    margin-bottom: 0.8rem;
+}
+
+/* --- NEW Line Connectors --- */
+.line-connector {
+    position: absolute;
+    background-color: #ccc;
+}
+div[data-anim="line-down"] {
+    width: 2px;
+    height: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -2rem;
+}
+div[data-anim="line-across"] {
+    width: 100%;
+    height: 2px;
+    top: -2rem;
+    left: 0;
+}
+div[data-anim="line-to-group"] {
+    width: 2px;
+    height: 2rem;
+    top: -2rem;
+    left: 50%;
+    transform: translateX(-50%);
+}
+div[data-anim="line-to-sub"] {
+    width: 2px;
+    height: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -1rem;
+}
+
+/* Animation Classes */
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .two-column-grid {
+        grid-template-columns: 1fr;
+    }
+    .four-column-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .level-2-wrapper {
+        flex-wrap: wrap;
+        margin-top: 2rem;
+    }
+    .chart-node-group {
+        width: 45%;
+        margin-bottom: 3rem;
+    }
+    .level-2-wrapper > div[data-anim="line-across"] {
+        display: none; /* Hide main horizontal line on smaller screens */
+    }
+    .hero-text-content h1 {
+        font-size: 3rem;
+    }
+    .section-title {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-section {
+        padding: 4rem 1rem;
+    }
+    .four-column-grid {
+        grid-template-columns: 1fr;
+    }
+    .chart-node-group {
+        width: 100%;
+        margin-bottom: 3rem;
+    }
+    .hero-text-content h1 {
+        font-size: 2.5rem;
+    }
+    .hero-text-content .subtitle {
+        font-size: 1rem;
+    }
+} 
